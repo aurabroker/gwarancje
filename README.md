@@ -1,0 +1,2 @@
+# gwarancje
+Gwarancje.PRO

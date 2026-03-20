@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gwarancje ubezpieczeniowe dla firm | gwarancje.pro – Aura Consulting</title>
+<meta name="description" content="Broker gwarancji ubezpieczeniowych dla firm budowlanych i wykonawców. Wadium, należyte wykonanie, zwrot zaliczki. Badanie rynku i wdrożenie bezpłatne.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300..700;1,300..700&subset=latin-ext&display=swap" rel="stylesheet">
+<style>
+:root{
+  --c-bg:#f7f6f2;--c-surface:#ffffff;--c-border:#e2e0d9;
+  --c-text:#1a1a18;--c-muted:#6b6b66;--c-faint:#b0afa9;
+  --c-primary:#01696f;--c-primary-h:#0c4e54;--c-primary-light:#cedcd8;
+  --c-accent:#d19900;--c-dark:#111210;
+  --font:'Inter','Helvetica Neue',Arial,sans-serif;
+  --r:0.75rem;--r-lg:1rem;--r-xl:1.5rem;
+  --shadow:0 4px 24px rgba(0,0,0,.07);
+  --transition:220ms cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);color:var(--c-text);background:var(--c-bg);line-height:1.6}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font:inherit;border:none;background:none}
+
+/* ── TOPBAR ── */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(247,246,242,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--c-border);padding:0 clamp(1rem,5vw,3rem);height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.logo{font-size:1.25rem;font-weight:700;color:var(--c-primary);letter-spacing:-.02em}
+.logo span{color:var(--c-muted);font-weight:400}
+.nav{display:flex;align-items:center;gap:2rem}
+.nav a{font-size:.875rem;font-weight:500;color:var(--c-muted);transition:color var(--transition)}
+.nav a:hover{color:var(--c-primary)}
+.nav-phone{font-weight:700;color:var(--c-primary)!important}
+.nav-cta{background:var(--c-primary);color:#fff!important;padding:.5rem 1.25rem;border-radius:var(--r);transition:background var(--transition)!important}
+.nav-cta:hover{background:var(--c-primary-h)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--c-text);border-radius:2px;transition:var(--transition)}
+
+/* ── HERO ── */
+.hero{min-height:calc(100dvh - 64px);display:flex;align-items:center;padding:clamp(3rem,8vw,6rem) clamp(1rem,5vw,3rem);background:linear-gradient(135deg,#f7f6f2 0%,#e8f2f0 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-10%;top:-20%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(1,105,111,.08) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--c-primary-light);color:var(--c-primary);padding:.375rem 1rem;border-radius:9999px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem}
+.hero h1{font-size:clamp(2rem,4vw,3.25rem);font-weight:700;line-height:1.15;letter-spacing:-.03em;margin-bottom:1.25rem}
+.hero h1 em{font-style:normal;color:var(--c-primary)}
+.hero-sub{font-size:clamp(1rem,1.5vw,1.125rem);color:var(--c-muted);max-width:48ch;margin-bottom:2rem;line-height:1.7}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--c-primary);color:#fff;padding:.875rem 1.75rem;border-radius:var(--r);font-weight:600;font-size:.9375rem;transition:background var(--transition),transform var(--transition)}
+.btn-primary:hover{background:var(--c-primary-h);transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid var(--c-border);color:var(--c-text);padding:.875rem 1.75rem;border-radius:var(--r);font-weight:600;font-size:.9375rem;transition:border-color var(--transition),background var(--transition)}
+.btn-ghost:hover{border-color:var(--c-primary);background:var(--c-primary-light)}
+.hero-stats{display:flex;gap:2rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--c-border)}
+.stat-num{font-size:1.75rem;font-weight:700;color:var(--c-primary);line-height:1}
+.stat-label{font-size:.8rem;color:var(--c-muted);margin-top:.25rem}
+.hero-visual{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-xl);padding:2rem;box-shadow:var(--shadow)}
+.hero-card-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--c-muted);margin-bottom:1.25rem}
+.guarantee-item{display:flex;align-items:center;gap:.875rem;padding:.875rem 0;border-bottom:1px solid var(--c-border)}
+.guarantee-item:last-child{border-bottom:none}
+.g-badge{padding:.25rem .625rem;border-radius:.375rem;font-size:.75rem;font-weight:700;white-space:nowrap}
+.g-wadium{background:#dbeafe;color:#1d4ed8}
+.g-nwk{background:var(--c-primary-light);color:var(--c-primary)}
+.g-uwu{background:#fef9c3;color:#854d0e}
+.g-zal{background:#fde8d8;color:#9a3412}
+.g-info{flex:1}
+.g-name{font-size:.875rem;font-weight:600}
+.g-sub{font-size:.75rem;color:var(--c-muted);margin-top:.125rem}
+.g-amount{font-size:.875rem;font-weight:700;color:var(--c-text);text-align:right;font-variant-numeric:tabular-nums}
+
+/* ── SECTIONS ── */
+section{padding:clamp(4rem,8vw,6rem) clamp(1rem,5vw,3rem)}
+.container{max-width:1100px;margin:0 auto;width:100%}
+.section-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--c-primary);margin-bottom:.75rem}
+.section-title{font-size:clamp(1.75rem,3vw,2.5rem);font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:1rem}
+.section-sub{font-size:1.0625rem;color:var(--c-muted);max-width:52ch;line-height:1.7}
+
+/* ── PRODUKTY ── */
+#produkty{background:var(--c-surface)}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem;margin-top:3rem}
+.product-card{background:var(--c-bg);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:1.75rem;transition:box-shadow var(--transition),border-color var(--transition)}
+.product-card:hover{box-shadow:var(--shadow);border-color:var(--c-primary-light)}
+.product-icon{width:44px;height:44px;border-radius:var(--r);background:var(--c-primary-light);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;font-size:1.25rem}
+.product-card h3{font-size:1rem;font-weight:700;margin-bottom:.625rem}
+.product-card p{font-size:.875rem;color:var(--c-muted);line-height:1.65}
+.product-tag{display:inline-block;margin-top:.875rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c-primary)}
+
+/* ── DLACZEGO MY ── */
+#dlaczego-my{background:var(--c-dark);color:#fff}
+#dlaczego-my .section-label{color:#6ee7df}
+#dlaczego-my .section-title{color:#fff}
+#dlaczego-my .section-sub{color:rgba(255,255,255,.6)}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem;margin-top:3rem}
+.why-card{border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:2rem;background:rgba(255,255,255,.03);transition:background var(--transition),border-color var(--transition)}
+.why-card:hover{background:rgba(255,255,255,.06);border-color:rgba(110,231,223,.3)}
+.why-number{font-size:2.5rem;font-weight:800;color:rgba(110,231,223,.25);line-height:1;margin-bottom:1rem;font-variant-numeric:tabular-nums}
+.why-card h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.why-card p{font-size:.875rem;color:rgba(255,255,255,.55);line-height:1.65}
+
+/* ── PROCES ── */
+#proces{background:var(--c-bg)}
+.process-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0;margin-top:3rem;position:relative}
+.process-step{padding:1.5rem;position:relative}
+.process-step::after{content:'→';position:absolute;right:-0.5rem;top:1.75rem;font-size:1.25rem;color:var(--c-faint)}
+.process-step:last-child::after{display:none}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--c-primary);color:#fff;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.process-step h3{font-size:.9375rem;font-weight:700;margin-bottom:.375rem}
+.process-step p{font-size:.8125rem;color:var(--c-muted);line-height:1.6}
+
+/* ── CASE STUDY ── */
+#case-study{background:var(--c-surface)}
+.case-box{background:linear-gradient(135deg,#f0faf9 0%,#e8f5f0 100%);border:1px solid var(--c-primary-light);border-radius:var(--r-xl);padding:clamp(2rem,5vw,3rem);display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:2.5rem}
+.case-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--c-primary);margin-bottom:.5rem}
+.case-box h3{font-size:1.25rem;font-weight:700;margin-bottom:.75rem}
+.case-box p{font-size:.9rem;color:var(--c-muted);line-height:1.7}
+.case-result{background:#fff;border-radius:var(--r-lg);padding:1.5rem;border:1px solid var(--c-border)}
+.result-item{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--c-border)}
+.result-item:last-child{border-bottom:none}
+.result-check{width:22px;height:22px;border-radius:50%;background:var(--c-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;margin-top:.1rem}
+.result-text{font-size:.875rem;line-height:1.5}
+.result-text strong{color:var(--c-primary)}
+
+/* ── FAQ ── */
+#faq{background:var(--c-bg)}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:3rem}
+.faq-item{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:1.5rem;cursor:pointer;transition:border-color var(--transition)}
+.faq-item:hover{border-color:var(--c-primary-light)}
+.faq-q{font-size:.9375rem;font-weight:600;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.faq-icon{width:22px;height:22px;border-radius:50%;background:var(--c-primary-light);color:var(--c-primary);display:flex;align-items:center;justify-content:center;font-size:.875rem;flex-shrink:0;transition:transform var(--transition)}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{font-size:.875rem;color:var(--c-muted);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .3s ease,margin-top .3s ease}
+.faq-item.open .faq-a{max-height:300px;margin-top:.875rem}
+
+/* ── KONTAKT ── */
+#kontakt{background:var(--c-dark);color:#fff}
+#kontakt .section-label{color:#6ee7df}
+#kontakt .section-title{color:#fff}
+#kontakt .section-sub{color:rgba(255,255,255,.6)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;align-items:start}
+.contact-info{display:flex;flex-direction:column;gap:1.5rem}
+.contact-item{display:flex;align-items:flex-start;gap:1rem}
+.contact-icon{width:44px;height:44px;border-radius:var(--r);background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.contact-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:.25rem}
+.contact-value{font-size:1.0625rem;font-weight:600;color:#fff}
+.contact-value a{color:inherit}
+.contact-form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-xl);padding:2rem}
+.form-field{margin-bottom:1.25rem}
+.form-label{display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.5);margin-bottom:.5rem}
+.form-input,.form-select{width:100%;padding:.75rem 1rem;border-radius:var(--r);border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font:inherit;font-size:.9375rem;outline:none;transition:border-color var(--transition)}
+.form-input::placeholder{color:rgba(255,255,255,.3)}
+.form-input:focus,.form-select:focus{border-color:rgba(110,231,223,.5)}
+.form-select option{background:#1a1a18;color:#fff}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-error{display:none;font-size:.8rem;color:#f87171;margin-top:.375rem}
+.form-success{display:none;background:rgba(110,231,223,.1);border:1px solid rgba(110,231,223,.3);border-radius:var(--r);padding:1rem;color:#6ee7df;font-size:.875rem;margin-top:1rem;text-align:center}
+.btn-submit{width:100%;padding:1rem;background:var(--c-primary);color:#fff;border-radius:var(--r);font-weight:700;font-size:1rem;transition:background var(--transition);margin-top:.5rem}
+.btn-submit:hover{background:var(--c-primary-h)}
+
+/* ── PROJEKTY ── */
+#projekty{background:var(--c-surface)}
+.projekty-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;margin-top:2.5rem}
+.projekt-card{border:1px solid var(--c-border);border-radius:var(--r-lg);padding:1.5rem;transition:box-shadow var(--transition),border-color var(--transition);display:block}
+.projekt-card:hover{box-shadow:var(--shadow);border-color:var(--c-primary-light)}
+.projekt-domain{font-size:.9375rem;font-weight:700;color:var(--c-primary);margin-bottom:.375rem}
+.projekt-desc{font-size:.8125rem;color:var(--c-muted);line-height:1.55}
+
+/* ── FOOTER ── */
+footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(1rem,5vw,3rem);font-size:.8rem;line-height:1.8}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.4);transition:color var(--transition)}
+.footer-links a:hover{color:#fff}
+.footer-divider{border:none;border-top:1px solid rgba(255,255,255,.08);margin:.5rem 0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-inner,.case-box,.contact-grid{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .faq-grid{grid-template-columns:1fr}
+  .process-step::after{display:none}
+  .nav{display:none}
+  .hamburger{display:flex}
+}
+@media(max-width:600px){
+  .hero-stats{flex-wrap:wrap;gap:1rem}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a href="#" class="logo">Gwarancje<span>.PRO</span></a>
+  <nav class="nav">
+    <a href="#produkty">Produkty</a>
+    <a href="#dlaczego-my">Dlaczego my</a>
+    <a href="#proces">Jak działamy</a>
+    <a href="#faq">FAQ</a>
+    <a href="tel:+48500502702" class="nav-phone">📞 500 502 702</a>
+    <a href="#kontakt" class="nav-cta">Zapytaj o wycenę</a>
+  </nav>
+  <button class="hamburger" onclick="toggleMenu(this)" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">🔒 Broker Ubezpieczeniowy dla Firm</div>
+      <h1>Gwarancje ubezpieczeniowe<br>dla <em>wykonawców i deweloperów</em></h1>
+      <p class="hero-sub">Jako niezależny broker negocjujemy dla Twojej firmy gwarancje wadialnie, kontraktowe i deweloperskie u wszystkich liczących się TU na rynku. Analiza i wdrożenie są w 100% bezpłatne.</p>
+      <div class="hero-btns">
+        <a href="#kontakt" class="btn-primary">Zamów bezpłatną analizę →</a>
+        <a href="#produkty" class="btn-ghost">Poznaj produkty</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">10+</div>
+          <div class="stat-label">TU na rynku<br>w jednym miejscu</div>
+        </div>
+        <div>
+          <div class="stat-num">0 zł</div>
+          <div class="stat-label">Koszt usługi<br>brokerskiej</div>
+        </div>
+        <div>
+          <div class="stat-num">15 lat</div>
+          <div class="stat-label">Doświadczenia<br>w gwarancjach</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-title">Aktywne gwarancje — przykład portfela</div>
+      <div class="guarantee-item">
+        <span class="g-badge g-wadium">WADIUM</span>
+        <div class="g-info">
+          <div class="g-name">Budowa DK7 — odcinek B</div>
+          <div class="g-sub">GDDKiA Warszawa · Warta</div>
+        </div>
+        <div class="g-amount">500 000 zł</div>
+      </div>
+      <div class="guarantee-item">
+        <span class="g-badge g-nwk">NWK</span>
+        <div class="g-info">
+          <div class="g-name">Osiedle Panorama etap II</div>
+          <div class="g-sub">Marvipol Development · Uniqa</div>
+        </div>
+        <div class="g-amount">1 250 000 zł</div>
+      </div>
+      <div class="guarantee-item">
+        <span class="g-badge g-uwu">UWU</span>
+        <div class="g-info">
+          <div class="g-name">Centrum logistyczne Łódź</div>
+          <div class="g-sub">Panattoni Europe · Allianz</div>
+        </div>
+        <div class="g-amount">875 000 zł</div>
+      </div>
+      <div class="guarantee-item">
+        <span class="g-badge g-zal">ZAL</span>
+        <div class="g-info">
+          <div class="g-name">Remont Mostu Łazienkowskiego</div>
+          <div class="g-sub">ZDM Warszawa · PZU</div>
+        </div>
+        <div class="g-amount">320 000 zł</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUKTY -->
+<section id="produkty">
+  <div class="container">
+    <div class="section-label">Nasze produkty</div>
+    <h2 class="section-title">Cztery rodzaje gwarancji<br>dla każdego etapu kontraktu</h2>
+    <p class="section-sub">Od przetargu po usunięcie usterek — zabezpieczamy każdy etap realizacji inwestycji budowlanej i deweloperskiej.</p>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-icon">🏗️</div>
+        <h3>Gwarancja wadialna</h3>
+        <p>Zastępuje gotówkowe wadium przetargowe. Pozwala zachować płynność finansową na czas postępowania o zamówienie publiczne i prywatne.</p>
+        <span class="product-tag">WADIUM</span>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">📋</div>
+        <h3>Należyte wykonanie</h3>
+        <p>Gwarancja terminowego i zgodnego z umową wykonania robót budowlanych. Standardowy wymóg zamawiającego przy podpisaniu kontraktu.</p>
+        <span class="product-tag">NWK</span>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🔧</div>
+        <h3>Usunięcie wad i usterek</h3>
+        <p>Zabezpieczenie okresu rękojmi i gwarancji jakości po odbiorze robót. Zwalnia zatrzymane kaucje i poprawia cash flow firmy.</p>
+        <span class="product-tag">UWU</span>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">💰</div>
+        <h3>Zwrot zaliczki</h3>
+        <p>Chroni zamawiającego przed utratą przedpłaty w razie niewykonania umowy. Niezbędna przy kontraktach z zaliczkowym finansowaniem.</p>
+        <span class="product-tag">ZAL</span>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🏢</div>
+        <h3>Gwarancja deweloperska</h3>
+        <p>Obowiązkowe zabezpieczenie środków nabywców mieszkań zgodnie z Ustawą Deweloperską. Niezbędna przy otwartym rachunku powierniczym.</p>
+        <span class="product-tag">DEW</span>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">⚡</div>
+        <h3>Inne gwarancje kontraktowe</h3>
+        <p>Gwarancje akcyzowe, celne, zapłaty, koncesyjne i inne — dopasowane do specyfiki branży i indywidualnych wymagań kontrahenta.</p>
+        <span class="product-tag">INNE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DLACZEGO MY -->
+<section id="dlaczego-my">
+  <div class="container">
+    <div class="section-label">Dlaczego my</div>
+    <h2 class="section-title">Broker to Twój sojusznik,<br>nie agent TU</h2>
+    <p class="section-sub">W odróżnieniu od agenta, broker reprezentuje wyłącznie Twoje interesy — negocjuje warunki, monitoruje terminy i zarządza całym portfelem gwarancji.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-number">01</div>
+        <h3>Dostęp do całego rynku</h3>
+        <p>Porównujemy oferty Allianz, Ergo Hestia, Euler Hermes, InterRisk, KUKE, PZU, Warta, Uniqa, Compensa i TUW — w jednym miejscu.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-number">02</div>
+        <h3>Umowy limitów wynegocjowane</h3>
+        <p>Dzięki zbiorczym umowom limitowym uzyskujemy dla Ciebie stawki korporacyjne i szybkie wystawianie gwarancji bez analizy każdego zlecenia.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-number">03</div>
+        <h3>Monitoring terminów 24/7</h3>
+        <p>Nasz system automatycznie śledzi daty wygaśnięcia i alarmuje z wyprzedzeniem — nigdy nie przegapisz renewalu kluczowej gwarancji.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-number">04</div>
+        <h3>Zero kosztów dla Ciebie</h3>
+        <p>Usługa brokerska jest w 100% bezpłatna — wynagrodzenie pochodzi od towarzystwa ubezpieczeń, nie od klienta.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-number">05</div>
+        <h3>Pomoc przy roszczeniach</h3>
+        <p>W przypadku wezwania beneficjenta do wypłaty reprezentujemy Twoje interesy i wspieramy na każdym etapie postępowania.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-number">06</div>
+        <h3>15 lat w branży budowlanej</h3>
+        <p>Znamy specyfikę przetargów GDDKiA, Urzędów Marszałkowskich i dużych deweloperów — wiemy czego wymagają zamawiający.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCES -->
+<section id="proces">
+  <div class="container">
+    <div class="section-label">Jak działamy</div>
+    <h2 class="section-title">Od zapytania do gwarancji<br>w 4 krokach</h2>
+    <p class="section-sub">Prosta procedura, minimum formalności, maksimum efektu. Pierwsza gwarancja często gotowa w ciągu 24–48h.</p>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <h3>Zapytanie</h3>
+        <p>Wypełniasz formularz lub dzwonisz. Przekazujesz dane kontraktu i wymagania zamawiającego.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <h3>Analiza rynku</h3>
+        <p>Weryfikujemy dostępność w ramach wynegocjowanych UL i zbieramy oferty od wszystkich TU.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <h3>Rekomendacja</h3>
+        <p>Przedstawiamy najlepszą ofertę z uzasadnieniem. Ty decydujesz i podpisujesz wniosek.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <h3>Wystawienie</h3>
+        <p>Gwarancja wystawiona i dostarczona do Ciebie lub bezpośrednio do zamawiającego.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section id="case-study">
+  <div class="container">
+    <div class="section-label">Case Study</div>
+    <h2 class="section-title">Jak realnie obniżamy koszty<br>i przyspieszamy procesy</h2>
+    <div class="case-box">
+      <div>
+        <div class="case-label">Klient</div>
+        <h3>Generalne przedsiębiorstwo budowlane — segment MŚP</h3>
+        <p>Firma realizująca rocznie 8–12 kontraktów budowlanych dla JST i GDDKiA. Problem: każda gwarancja wymagała tygodniowej analizy kredytowej, blokując szybkie złożenie oferty.</p>
+        <br>
+        <div class="case-label">Wdrożenie</div>
+        <p>Wynegocjowaliśmy zbiorczą umowę limitu z dwoma TU na łączną kwotę 8 mln zł. Gwarancje wadialne do 300 tys. zł wystawiane w ciągu 2–4 godzin od złożenia wniosku.</p>
+      </div>
+      <div class="case-result">
+        <div class="case-label" style="color:var(--c-primary);margin-bottom:1rem">Efekty wdrożenia</div>
+        <div class="result-item">
+          <div class="result-check">✓</div>
+          <div class="result-text">Czas wystawienia gwarancji wadialnej skrócony z <strong>7 dni do 4 godzin</strong></div>
+        </div>
+        <div class="result-item">
+          <div class="result-check">✓</div>
+          <div class="result-text">Stawka obniżona o <strong>0,15 pp</strong> dzięki sile negocjacyjnej brokera</div>
+        </div>
+        <div class="result-item">
+          <div class="result-check">✓</div>
+          <div class="result-text">Firma złożyła <strong>3 dodatkowe oferty</strong> w przetargach których wcześniej nie zdążyła</div>
+        </div>
+        <div class="result-item">
+          <div class="result-check">✓</div>
+          <div class="result-text">Pełny monitoring terminów — <strong>zero przegapionych wygaśnięć</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Najczęstsze pytania</h2>
+    <div class="faq-grid">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Ile kosztuje usługa brokera gwarancji?<div class="faq-icon">+</div></div>
+        <div class="faq-a">Usługa brokerska jest bezpłatna dla klienta. Wynagrodzenie brokera pochodzi z prowizji towarzystwa ubezpieczeń, które wliczone jest w stawkę składki — taką samą, jaką zapłaciłbyś idąc bezpośrednio do TU, często nawet niższą.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Jak szybko mogę otrzymać gwarancję?<div class="faq-icon">+</div></div>
+        <div class="faq-a">Przy aktywnej umowie limitu gwarancje wadialne do standardowej kwoty wystawiamy w ciągu 2–8 godzin. Gwarancje kontraktowe o większej wartości wymagają zazwyczaj 1–3 dni roboczych.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Co to jest umowa limitu (UL)?<div class="faq-icon">+</div></div>
+        <div class="faq-a">To umowa ramowa z TU, która ustala maksymalną łączną sumę gwarancyjną dla Twojej firmy oraz warunki wystawiania kolejnych gwarancji bez indywidualnej analizy. Znacznie przyspiesza cały proces i pozwala reagować na przetargi z dnia na dzień.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Czy pomagacie przy wymaganiach dotyczących treści gwarancji?<div class="faq-icon">+</div></div>
+        <div class="faq-a">Tak — weryfikujemy, czy treść gwarancji spełnia wymogi SIWZ lub umowy deweloperskiej, i negocjujemy z TU zapisy niekorzystne dla klienta. To nasza standardowa usługa, bez dodatkowych opłat.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Czy obsługujecie firmy bez historii kredytowej?<div class="faq-icon">+</div></div>
+        <div class="faq-a">Tak. Pomagamy nawet nowym firmom — dobieramy TU o elastycznym podejściu do oceny ryzyka i przygotowujemy dokumentację w sposób, który maksymalizuje szanse na uzyskanie limitu.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Czy audyt posiadanego portfela gwarancji jest płatny?<div class="faq-icon">+</div></div>
+        <div class="faq-a">Absolutnie nie. Przegląd aktualnych warunków umów limitowych, analiza stawek i wskazanie optymalizacji są całkowicie bezpłatne i niezobowiązujące.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="container">
+    <div class="section-label">Kontakt</div>
+    <h2 class="section-title">Działajmy razem.</h2>
+    <p class="section-sub">Wypełnij formularz — przeanalizujemy Twój portfel kontraktów i wynegocjujemy optymalne warunki umowy limitu.</p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Infolinia</div>
+            <div class="contact-value"><a href="tel:+48500502702">500 502 702</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-label">E-mail</div>
+            <div class="contact-value"><a href="mailto:biuro@gwarancje.pro">biuro@gwarancje.pro</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🏢</div>
+          <div>
+            <div class="contact-label">Adres</div>
+            <div class="contact-value" style="font-size:.9375rem">ul. Bolkowska 2A/28<br>01-446 Warszawa</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🛡️</div>
+          <div>
+            <div class="contact-label">Licencja KNF</div>
+            <div class="contact-value" style="font-size:.875rem">Nr 1972/13 · Rejestr brokerów 00001851/U</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <form id="contact-form" onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">Imię i nazwisko *</label>
+              <input class="form-input" type="text" placeholder="Jan Kowalski" required>
+            </div>
+            <div class="form-field">
+              <label class="form-label">NIP firmy *</label>
+              <input class="form-input" type="text" placeholder="0000000000" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">E-mail *</label>
+              <input class="form-input" type="email" placeholder="adres@firma.pl" required>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Telefon</label>
+              <input class="form-input" type="tel" placeholder="500 000 000">
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Czego szukasz?</label>
+            <select class="form-select">
+              <option value="">Wybierz produkt</option>
+              <option>Gwarancja wadialna</option>
+              <option>Należyte wykonanie (NWK)</option>
+              <option>Usunięcie wad i usterek (UWU)</option>
+              <option>Zwrot zaliczki</option>
+              <option>Gwarancja deweloperska</option>
+              <option>Umowa limitu — analiza rynku</option>
+              <option>Inny rodzaj gwarancji</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Wiadomość</label>
+            <input class="form-input" type="text" placeholder="Opcjonalnie: kwota, termin przetargu, wymagania...">
+          </div>
+          <button type="submit" class="btn-submit">Wyślij zapytanie →</button>
+          <div class="form-success" id="form-success">✓ Dziękujemy! Odezwiemy się w ciągu 2 godzin w dni robocze.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJEKTY -->
+<section id="projekty">
+  <div class="container">
+    <div class="section-label">Ekosystem Aura Consulting</div>
+    <h2 class="section-title">Nasze projekty eksperckie</h2>
+    <div class="projekty-grid">
+      <a href="https://www.auraconsulting.pl" class="projekt-card">
+        <div class="projekt-domain">auraconsulting.pl</div>
+        <div class="projekt-desc">Korporacyjny broker ubezpieczeniowy. Złożone audyty i programy dla przemysłu.</div>
+      </a>
+      <a href="https://grupowe.pro" class="projekt-card">
+        <div class="projekt-domain">grupowe.pro</div>
+        <div class="projekt-desc">Grupowe ubezpieczenia na życie i opieka medyczna dla firm i ich pracowników.</div>
+      </a>
+      <a href="https://utratadochodu.com" class="projekt-card">
+        <div class="projekt-domain">utratadochodu.com</div>
+        <div class="projekt-desc">Ubezpieczenie utraty dochodu — prywatne L4 dla przedsiębiorców i specjalistów.</div>
+      </a>
+      <a href="https://idzik.org.pl" class="projekt-card">
+        <div class="projekt-domain">idzik.org.pl</div>
+        <div class="projekt-desc">Kancelaria Adwokacka Magdaleny Idzik-Cieśla — prawo cywilne i gospodarcze.</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="/polityka-prywatnosci.html">Polityka prywatności</a>
+      <a href="/rodo.html">Nota RODO</a>
+      <a href="/regulamin.html">Regulamin</a>
+      <a href="mailto:biuro@gwarancje.pro">biuro@gwarancje.pro</a>
+      <a href="tel:+48500502702">500 502 702</a>
+    </div>
+    <hr class="footer-divider">
+    <p>© 2026 Aura Consulting. Wszelkie prawa zastrzeżone.</p>
+    <p>Aura Consulting spółka z ograniczoną odpowiedzialnością z siedzibą w Warszawie, ul. Bolkowska 2A lok. 28, wpisana do KRS pod nr 0000426835 przez Sąd Rejonowy dla m.st. Warszawy, XII Wydział Gospodarczy. REGON 341302033, kapitał zakładowy 34 000 zł. Zezwolenie KNF nr 1972/13, wpis w rejestrze brokerów nr 00001851/U.</p>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(el){
+  el.classList.toggle('open');
+}
+function toggleMenu(btn){
+  const nav = document.querySelector('.nav');
+  nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+  nav.style.flexDirection = 'column';
+  nav.style.position = 'fixed';
+  nav.style.top = '64px';
+  nav.style.left = '0';
+  nav.style.right = '0';
+  nav.style.background = 'rgba(247,246,242,.98)';
+  nav.style.padding = '1.5rem';
+  nav.style.borderBottom = '1px solid #e2e0d9';
+  nav.style.gap = '1.25rem';
+  nav.style.zIndex = '99';
+}
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('form-success').style.display = 'block';
+  e.target.querySelectorAll('input,select,button[type=submit]').forEach(el=>el.disabled=true);
+}
+// Smooth active nav highlight
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 80) current = s.id; });
+  document.querySelectorAll('.nav a').forEach(a => {
+    a.style.color = a.getAttribute('href') === '#'+current ? 'var(--c-primary)' : '';
+  });
+});
+</script>
+</body>
+</html>

@@ -30,12 +30,14 @@ button{cursor:pointer;font:inherit;border:none;background:none}
 .topbar{position:sticky;top:0;z-index:100;background:rgba(247,246,242,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--c-border);padding:0 clamp(1rem,5vw,3rem);height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .logo{font-size:1.25rem;font-weight:700;color:var(--c-primary);letter-spacing:-.02em}
 .logo span{color:var(--c-muted);font-weight:400}
-.nav{display:flex;align-items:center;gap:2rem}
+.nav{display:flex;align-items:center;gap:1.5rem}
 .nav a{font-size:.875rem;font-weight:500;color:var(--c-muted);transition:color var(--transition)}
 .nav a:hover{color:var(--c-primary)}
 .nav-phone{font-weight:700;color:var(--c-primary)!important}
 .nav-cta{background:var(--c-primary);color:#fff!important;padding:.5rem 1.25rem;border-radius:var(--r);transition:background var(--transition)!important}
 .nav-cta:hover{background:var(--c-primary-h)!important}
+.nav-panel{border:1px solid var(--c-border);padding:.4rem 1rem;border-radius:var(--r);font-weight:600;color:var(--c-text)!important;transition:all var(--transition)}
+.nav-panel:hover{border-color:var(--c-primary);color:var(--c-primary)!important;background:var(--c-bg)}
 .hamburger{display:none;flex-direction:column;gap:5px;padding:4px}
 .hamburger span{display:block;width:22px;height:2px;background:var(--c-text);border-radius:2px;transition:var(--transition)}
 
@@ -200,6 +202,7 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
     <a href="#faq">FAQ</a>
     <a href="tel:+48500502702" class="nav-phone">📞 500 502 702</a>
     <a href="#kontakt" class="nav-cta">Zapytaj o wycenę</a>
+    <a href="https://app.gwarancje.pro" target="_blank" class="nav-panel">👤 Panel klienta</a>
   </nav>
   <button class="hamburger" onclick="toggleMenu(this)" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -211,8 +214,8 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
   <div class="hero-inner">
     <div>
       <div class="hero-badge">🔒 Broker Ubezpieczeniowy dla Firm</div>
-      <h1>Gwarancje ubezpieczeniowe<br>dla <em>wykonawców i deweloperów</em></h1>
-      <p class="hero-sub">Jako niezależny broker negocjujemy dla Twojej firmy gwarancje wadialnie, kontraktowe i deweloperskie u wszystkich liczących się TU na rynku. Analiza i wdrożenie są w 100% bezpłatne.</p>
+      <h1>Gwarancje ubezpieczeniowe<br>dla <em>budownictwa</em></h1>
+      <p class="hero-sub">Gwarancjami zajmujemy się od ponad 15 lat, w tym okresie wystawiliśmy kilka tysięcy gwarancji, dla ponad 200 firm w Polsce.</p>
       <div class="hero-btns">
         <a href="#kontakt" class="btn-primary">Zamów bezpłatną analizę →</a>
         <a href="#produkty" class="btn-ghost">Poznaj produkty</a>
@@ -273,9 +276,9 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
 <!-- PRODUKTY -->
 <section id="produkty">
   <div class="container">
-    <div class="section-label">Nasze produkty</div>
+    <div class="section-label">Obsługiwane rozwiązania</div>
     <h2 class="section-title">Cztery rodzaje gwarancji<br>dla każdego etapu kontraktu</h2>
-    <p class="section-sub">Od przetargu po usunięcie usterek — zabezpieczamy każdy etap realizacji inwestycji budowlanej i deweloperskiej.</p>
+    <p class="section-sub">Od przetargu po usunięcie usterek — zabezpieczamy każdy etap realizacji inwestycji budowlanej.</p>
     <div class="products-grid">
       <div class="product-card">
         <div class="product-icon">🏗️</div>
@@ -302,12 +305,6 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
         <span class="product-tag">ZAL</span>
       </div>
       <div class="product-card">
-        <div class="product-icon">🏢</div>
-        <h3>Gwarancja deweloperska</h3>
-        <p>Obowiązkowe zabezpieczenie środków nabywców mieszkań zgodnie z Ustawą Deweloperską. Niezbędna przy otwartym rachunku powierniczym.</p>
-        <span class="product-tag">DEW</span>
-      </div>
-      <div class="product-card">
         <div class="product-icon">⚡</div>
         <h3>Inne gwarancje kontraktowe</h3>
         <p>Gwarancje akcyzowe, celne, zapłaty, koncesyjne i inne — dopasowane do specyfiki branży i indywidualnych wymagań kontrahenta.</p>
@@ -321,38 +318,23 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
 <section id="dlaczego-my">
   <div class="container">
     <div class="section-label">Dlaczego my</div>
-    <h2 class="section-title">Broker to Twój sojusznik,<br>nie agent TU</h2>
-    <p class="section-sub">W odróżnieniu od agenta, broker reprezentuje wyłącznie Twoje interesy — negocjuje warunki, monitoruje terminy i zarządza całym portfelem gwarancji.</p>
+    <h2 class="section-title">Broker to Twój sojusznik</h2>
+    <p class="section-sub">Prowadzimy proces pozyskania limitów na gwarancje. Nasi Klienci na etapie negocjacji nowych kontraktów znają koszty zabezpieczenia.</p>
     <div class="why-grid">
       <div class="why-card">
         <div class="why-number">01</div>
         <h3>Dostęp do całego rynku</h3>
-        <p>Porównujemy oferty Allianz, Ergo Hestia, Euler Hermes, InterRisk, KUKE, PZU, Warta, Uniqa, Compensa i TUW — w jednym miejscu.</p>
+        <p>Rozmawiamy z każdym podmiotem oferującym w Polsce gwarancje ubezpieczeniowe.</p>
       </div>
       <div class="why-card">
         <div class="why-number">02</div>
         <h3>Umowy limitów wynegocjowane</h3>
-        <p>Dzięki zbiorczym umowom limitowym uzyskujemy dla Ciebie stawki korporacyjne i szybkie wystawianie gwarancji bez analizy każdego zlecenia.</p>
+        <p>Uruchomienie kilku umów limitu daje elastyczność w dobraniu ostatecznego zabezpieczenia kontraktu.</p>
       </div>
       <div class="why-card">
         <div class="why-number">03</div>
         <h3>Monitoring terminów 24/7</h3>
-        <p>Nasz system automatycznie śledzi daty wygaśnięcia i alarmuje z wyprzedzeniem — nigdy nie przegapisz renewalu kluczowej gwarancji.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-number">04</div>
-        <h3>Zero kosztów dla Ciebie</h3>
-        <p>Usługa brokerska jest w 100% bezpłatna — wynagrodzenie pochodzi od towarzystwa ubezpieczeń, nie od klienta.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-number">05</div>
-        <h3>Pomoc przy roszczeniach</h3>
-        <p>W przypadku wezwania beneficjenta do wypłaty reprezentujemy Twoje interesy i wspieramy na każdym etapie postępowania.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-number">06</div>
-        <h3>15 lat w branży budowlanej</h3>
-        <p>Znamy specyfikę przetargów GDDKiA, Urzędów Marszałkowskich i dużych deweloperów — wiemy czego wymagają zamawiający.</p>
+        <p>Nasz autorski system automatycznie śledzi wykorzystanie limitu, daty wygasania gwarancji - wszystko Klient ma dostępne 24/7.</p>
       </div>
     </div>
   </div>
@@ -449,10 +431,6 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
         <div class="faq-a">Tak — weryfikujemy, czy treść gwarancji spełnia wymogi SIWZ lub umowy deweloperskiej, i negocjujemy z TU zapisy niekorzystne dla klienta. To nasza standardowa usługa, bez dodatkowych opłat.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">Czy obsługujecie firmy bez historii kredytowej?<div class="faq-icon">+</div></div>
-        <div class="faq-a">Tak. Pomagamy nawet nowym firmom — dobieramy TU o elastycznym podejściu do oceny ryzyka i przygotowujemy dokumentację w sposób, który maksymalizuje szanse na uzyskanie limitu.</div>
-      </div>
-      <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Czy audyt posiadanego portfela gwarancji jest płatny?<div class="faq-icon">+</div></div>
         <div class="faq-a">Absolutnie nie. Przegląd aktualnych warunków umów limitowych, analiza stawek i wskazanie optymalizacji są całkowicie bezpłatne i niezobowiązujące.</div>
       </div>
@@ -527,7 +505,6 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
               <option>Należyte wykonanie (NWK)</option>
               <option>Usunięcie wad i usterek (UWU)</option>
               <option>Zwrot zaliczki</option>
-              <option>Gwarancja deweloperska</option>
               <option>Umowa limitu — analiza rynku</option>
               <option>Inny rodzaj gwarancji</option>
             </select>

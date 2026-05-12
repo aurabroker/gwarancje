@@ -223,6 +223,18 @@
       ]
     },
     {
+      "@type": "VideoObject",
+      "@id": "https://gwarancje.pro/#wideo",
+      "name": "Gwarancje ubezpieczeniowe dla firm – jak działamy | Aura Consulting",
+      "description": "Wyjaśniamy czym jest broker gwarancji ubezpieczeniowych, jakie produkty oferujemy (wadium, NWK, UWU, ZAL) i dlaczego warto z nami współpracować. Bezpłatna usługa brokerska, 15 lat doświadczenia.",
+      "thumbnailUrl": "https://img.youtube.com/vi/S01sqBAOTlw/maxresdefault.jpg",
+      "embedUrl": "https://www.youtube.com/embed/S01sqBAOTlw",
+      "contentUrl": "https://www.youtube.com/watch?v=S01sqBAOTlw",
+      "uploadDate": "2026-05-12",
+      "inLanguage": "pl-PL",
+      "publisher": {"@id": "https://gwarancje.pro/#organization"}
+    },
+    {
       "@type": "Service",
       "@id": "https://gwarancje.pro/#gwarancja-wadialna",
       "name": "Gwarancja wadialna",
@@ -416,6 +428,11 @@ section{padding:clamp(4rem,8vw,6rem) clamp(1rem,5vw,3rem)}
 .form-success{display:none;background:rgba(110,231,223,.1);border:1px solid rgba(110,231,223,.3);border-radius:var(--r);padding:1rem;color:#6ee7df;font-size:.875rem;margin-top:1rem;text-align:center}
 .btn-submit{width:100%;padding:1rem;background:var(--c-primary);color:#fff;border-radius:var(--r);font-weight:700;font-size:1rem;transition:background var(--transition);margin-top:.5rem}
 .btn-submit:hover{background:var(--c-primary-h)}
+
+/* ── WIDEO ── */
+#wideo{background:var(--c-bg)}
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--r-xl);box-shadow:var(--shadow);margin-top:2.5rem;background:#000}
+.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:var(--r-xl)}
 
 /* ── PROJEKTY ── */
 #projekty{background:var(--c-surface)}
@@ -664,6 +681,25 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
           <div class="result-text">Pełny monitoring terminów — <strong>zero przegapionych wygaśnięć</strong></div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- WIDEO -->
+<section id="wideo" aria-labelledby="wideo-heading">
+  <div class="container">
+    <div class="section-label">Film o nas</div>
+    <h2 class="section-title" id="wideo-heading">Jak działamy — obejrzyj</h2>
+    <p class="section-sub">Kilka minut o tym, czym jest broker gwarancji i dlaczego warto z nami pracować.</p>
+    <div class="video-wrap">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/S01sqBAOTlw?rel=0&modestbranding=1"
+        title="Gwarancje ubezpieczeniowe dla firm – Aura Consulting"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
     </div>
   </div>
 </section>

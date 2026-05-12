@@ -1,29 +1,13 @@
-// ── Konfiguracja Supabase ──────────────────────────────────────────────────
-// Uzupełnij poniższe wartości danymi ze swojego projektu Supabase:
-//   Dashboard → Project Settings → API
 const SB_URL = 'https://kukvgsjrmrqtzhkszzum.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3Znc2pybXJxdHpoa3N6enVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTI0NzYsImV4cCI6MjA4ODQ4ODQ3Nn0.wOB-4CJTcRksSUY7WD7CXEccTKNxPIVF8AT8hczS5zY';
 
-// Nazwa tabeli w Supabase (dostosuj jeśli inna)
-const TABLE = 'blog_posts';
-
-// Oczekiwane kolumny tabeli:
-//   id          – unikalny identyfikator (uuid lub int)
-//   slug        – przyjazny URL (string, unikalny)
-//   title       – tytuł artykułu (text)
-//   excerpt     – krótki opis (text, opcjonalnie)
-//   content     – pełna treść HTML (text)
-//   tags        – tablica tagów (text[] lub json)
-//   published_at – data publikacji (timestamptz)
-//   cover_url   – URL okładki (text, opcjonalnie)
-// ─────────────────────────────────────────────────────────────────────────────
+const TABLE    = 'aura_articles';
+const PLATFORM = 'Gwarancje.pro';
 
 const supabase = window.supabase.createClient(SB_URL, SB_KEY);
 
-// ── Stan aplikacji ────────────────────────────────────────────────────────────
 let currentArticle = null;
 
-// ── Init ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   loadArticles();
   bindCloseArticle();
@@ -33,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('hashchange', handleHashOnLoad);
 
-// ── Pobieranie listy artykułów ────────────────────────────────────────────────
 async function loadArticles() {
   const grid  = document.getElementById('blog-grid');
   const errEl = document.getElementById('blog-error');
@@ -41,7 +24,9 @@ async function loadArticles() {
   try {
     const { data: posts, error } = await supabase
       .from(TABLE)
-      .select('id, slug, title, excerpt, tags, published_at, created_at, cover_url')
+      .select('id, title, excerpt, tags, published_at, created_at, thumbnail_url')
+      .eq('status', 'published')
+      .contains('platforms', [PLATFORM])
       .order('created_at', { ascending: false });
 
     if (error) throw error;
@@ -59,13 +44,12 @@ async function loadArticles() {
   }
 }
 
-// ── Karta artykułu ────────────────────────────────────────────────────────────
 function renderCard(post) {
   const date    = formatDate(post.published_at || post.created_at);
   const tags    = (post.tags || []).slice(0, 3);
   const excerpt = post.excerpt ? escapeHtml(post.excerpt).slice(0, 140) + '…' : '';
-  const cover   = post.cover_url
-    ? `<img src="${escapeHtml(post.cover_url)}" alt="${escapeHtml(post.title)}" class="w-full h-48 object-cover">`
+  const cover   = post.thumbnail_url
+    ? `<img src="${escapeHtml(post.thumbnail_url)}" alt="${escapeHtml(post.title)}" class="w-full h-48 object-cover">`
     : `<div class="w-full h-48 flex items-center justify-center text-5xl" style="background:#e8f2f0">📄</div>`;
 
   const tagsHtml = tags.map(t =>
@@ -74,7 +58,7 @@ function renderCard(post) {
 
   return `
     <article class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col"
-             onclick="openArticle('${escapeHtml(post.slug || post.id)}')">
+             onclick="openArticle('${post.id}')">
       <div class="overflow-hidden">${cover}</div>
       <div class="p-6 flex flex-col flex-1">
         ${tagsHtml ? `<div class="flex flex-wrap gap-1.5 mb-3">${tagsHtml}</div>` : ''}
@@ -88,9 +72,8 @@ function renderCard(post) {
     </article>`;
 }
 
-// ── Otwieranie artykułu ───────────────────────────────────────────────────────
-async function openArticle(slugOrId) {
-  window.location.hash = slugOrId;
+async function openArticle(id) {
+  window.location.hash = id;
 
   const listView   = document.getElementById('blog-list-view');
   const readerView = document.getElementById('article-reader-view');
@@ -99,37 +82,34 @@ async function openArticle(slugOrId) {
   listView.classList.add('hidden');
   readerView.scrollTop = 0;
 
-  // Reset treści
-  document.getElementById('reader-title').textContent   = 'Ładowanie…';
-  document.getElementById('reader-content').innerHTML   = '';
-  document.getElementById('reader-date').textContent    = '';
-  document.getElementById('reader-tags').innerHTML      = '';
+  document.getElementById('reader-title').textContent = 'Ładowanie…';
+  document.getElementById('reader-content').innerHTML = '';
+  document.getElementById('reader-date').textContent  = '';
+  document.getElementById('reader-tags').innerHTML    = '';
 
   try {
-    // Próbuj po slug, fallback po id
-    let query = supabase.from(TABLE).select('*');
-    query = slugOrId.match(/^[0-9]+$/)
-      ? query.eq('id', slugOrId)
-      : query.eq('slug', slugOrId);
+    const { data, error } = await supabase
+      .from(TABLE)
+      .select('*')
+      .eq('id', id)
+      .single();
 
-    const { data, error } = await query.single();
     if (error) throw error;
 
     currentArticle = data;
     renderArticle(data);
   } catch (err) {
     console.error('[Blog] Błąd ładowania artykułu:', err);
-    document.getElementById('reader-title').textContent   = 'Nie znaleziono artykułu';
-    document.getElementById('reader-content').innerHTML   = '<p class="text-slate-400">Artykuł jest niedostępny lub nie istnieje.</p>';
+    document.getElementById('reader-title').textContent = 'Nie znaleziono artykułu';
+    document.getElementById('reader-content').innerHTML = '<p class="text-slate-400">Artykuł jest niedostępny lub nie istnieje.</p>';
   }
 }
 
-// ── Renderowanie treści artykułu ──────────────────────────────────────────────
 function renderArticle(post) {
   const tags = (post.tags || []);
 
   document.getElementById('reader-title').textContent = post.title;
-  document.getElementById('reader-date').textContent  = formatDate(post.published_at);
+  document.getElementById('reader-date').textContent  = formatDate(post.published_at || post.created_at);
   document.getElementById('reader-content').innerHTML = post.content || '';
 
   const tagsEl = document.getElementById('reader-tags');
@@ -138,7 +118,6 @@ function renderArticle(post) {
   ).join('');
 }
 
-// ── Zamknięcie czytnika ───────────────────────────────────────────────────────
 function bindCloseArticle() {
   document.getElementById('close-article-btn').addEventListener('click', closeArticle);
 }
@@ -150,7 +129,6 @@ function closeArticle() {
   currentArticle = null;
 }
 
-// ── Kopiowanie linku ──────────────────────────────────────────────────────────
 function bindCopyLink() {
   const btn = document.getElementById('copy-link-btn');
   btn.addEventListener('click', () => {
@@ -162,7 +140,6 @@ function bindCopyLink() {
   });
 }
 
-// ── Routing po hash ───────────────────────────────────────────────────────────
 function handleHashOnLoad() {
   const hash = window.location.hash.slice(1);
   if (hash) {
@@ -173,7 +150,6 @@ function handleHashOnLoad() {
   }
 }
 
-// ── Utils ─────────────────────────────────────────────────────────────────────
 function formatDate(iso) {
   if (!iso) return '';
   return new Date(iso).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' });

@@ -914,19 +914,25 @@ window.addEventListener('scroll', () => {
       'https://kukvgsjrmrqtzhkszzum.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3Znc2pybXJxdHpoa3N6enVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTI0NzYsImV4cCI6MjA4ODQ4ODQ3Nn0.wOB-4CJTcRksSUY7WD7CXEccTKNxPIVF8AT8hczS5zY'
     );
-    const { data } = await sb
+    const { data, error } = await sb
       .from('blog_posts')
-      .select('slug, title, published_at, cover_url')
-      .order('published_at', { ascending: false })
+      .select('slug, title, published_at, created_at, cover_url')
+      .order('created_at', { ascending: false })
       .limit(3);
 
+    if (error) {
+      console.error('[Hero Blog] Supabase error:', error.message, '| code:', error.code);
+      el.innerHTML = '';
+      return;
+    }
     if (!data?.length) {
       el.innerHTML = '<p class="hero-blog-empty">Wkrótce pierwsze artykuły.</p>';
       return;
     }
     el.innerHTML = data.map(p => {
-      const date = new Date(p.published_at).toLocaleDateString('pl-PL', {day:'numeric', month:'short', year:'numeric'});
-      const title = p.title.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+      const ts    = p.published_at || p.created_at;
+      const date  = ts ? new Date(ts).toLocaleDateString('pl-PL', {day:'numeric', month:'short', year:'numeric'}) : '';
+      const title = (p.title || '').replace(/&/g,'&amp;').replace(/</g,'&lt;');
       const slug  = (p.slug || '').replace(/"/g,'');
       const thumb = p.cover_url
         ? `<img src="${p.cover_url}" alt="" class="hero-blog-thumb" loading="lazy">`
@@ -934,8 +940,8 @@ window.addEventListener('scroll', () => {
       return `<a href="/blog.html#${slug}" class="hero-blog-post">${thumb}<div class="hero-blog-info"><div class="hero-blog-title">${title}</div><div class="hero-blog-date">${date}</div></div></a>`;
     }).join('');
   } catch(e) {
-    el.innerHTML = '<p class="hero-blog-empty">Wkrótce pierwsze artykuły.</p>';
-  }
+    console.error('[Hero Blog] Unexpected error:', e);
+    el.innerHTML = '';
 })();
 </script>
 </body>

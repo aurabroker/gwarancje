@@ -915,8 +915,10 @@ window.addEventListener('scroll', () => {
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3Znc2pybXJxdHpoa3N6enVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTI0NzYsImV4cCI6MjA4ODQ4ODQ3Nn0.wOB-4CJTcRksSUY7WD7CXEccTKNxPIVF8AT8hczS5zY'
     );
     const { data, error } = await sb
-      .from('blog_posts')
-      .select('slug, title, published_at, created_at, cover_url')
+      .from('aura_articles')
+      .select('id, title, published_at, created_at, thumbnail_url')
+      .eq('status', 'published')
+      .contains('platforms', ['Gwarancje.pro'])
       .order('created_at', { ascending: false })
       .limit(3);
 
@@ -933,11 +935,10 @@ window.addEventListener('scroll', () => {
       const ts    = p.published_at || p.created_at;
       const date  = ts ? new Date(ts).toLocaleDateString('pl-PL', {day:'numeric', month:'short', year:'numeric'}) : '';
       const title = (p.title || '').replace(/&/g,'&amp;').replace(/</g,'&lt;');
-      const slug  = (p.slug || '').replace(/"/g,'');
-      const thumb = p.cover_url
-        ? `<img src="${p.cover_url}" alt="" class="hero-blog-thumb" loading="lazy">`
+      const thumb = p.thumbnail_url
+        ? `<img src="${p.thumbnail_url}" alt="" class="hero-blog-thumb" loading="lazy">`
         : `<div class="hero-blog-thumb-ph">📄</div>`;
-      return `<a href="/blog.html#${slug}" class="hero-blog-post">${thumb}<div class="hero-blog-info"><div class="hero-blog-title">${title}</div><div class="hero-blog-date">${date}</div></div></a>`;
+      return `<a href="/blog.html#${p.id}" class="hero-blog-post">${thumb}<div class="hero-blog-info"><div class="hero-blog-title">${title}</div><div class="hero-blog-date">${date}</div></div></a>`;
     }).join('');
   } catch(e) {
     console.error('[Hero Blog] Unexpected error:', e);

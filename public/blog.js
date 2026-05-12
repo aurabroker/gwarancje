@@ -41,8 +41,8 @@ async function loadArticles() {
   try {
     const { data: posts, error } = await supabase
       .from(TABLE)
-      .select('id, slug, title, excerpt, tags, published_at, cover_url')
-      .order('published_at', { ascending: false });
+      .select('id, slug, title, excerpt, tags, published_at, created_at, cover_url')
+      .order('created_at', { ascending: false });
 
     if (error) throw error;
 
@@ -61,7 +61,7 @@ async function loadArticles() {
 
 // ── Karta artykułu ────────────────────────────────────────────────────────────
 function renderCard(post) {
-  const date    = formatDate(post.published_at);
+  const date    = formatDate(post.published_at || post.created_at);
   const tags    = (post.tags || []).slice(0, 3);
   const excerpt = post.excerpt ? escapeHtml(post.excerpt).slice(0, 140) + '…' : '';
   const cover   = post.cover_url

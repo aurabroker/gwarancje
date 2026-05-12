@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+Disallow: /app.gwarancje.pro
+
+# AI/LLM crawlers — allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+Sitemap: https://gwarancje.pro/sitemap.xml

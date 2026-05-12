@@ -18,7 +18,7 @@ const TABLE = 'blog_posts';
 //   cover_url   – URL okładki (text, opcjonalnie)
 // ─────────────────────────────────────────────────────────────────────────────
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabase = window.supabase.createClient(SB_URL, SB_KEY);
 
 // ── Stan aplikacji ────────────────────────────────────────────────────────────
 let currentArticle = null;

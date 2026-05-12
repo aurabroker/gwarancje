@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Gwarancje.PRO – wiedza o gwarancjach ubezpieczeniowych</title>
+  <meta name="description" content="Poradniki i aktualności o gwarancjach ubezpieczeniowych dla firm budowlanych. Dowiedz się więcej o wadium, NWK, UWU i umowach limitu.">
+  <link rel="canonical" href="https://gwarancje.pro/blog.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gwarancje.pro/blog.html">
+  <meta property="og:title" content="Blog | Gwarancje.PRO – wiedza o gwarancjach ubezpieczeniowych">
+  <meta property="og:description" content="Poradniki i aktualności o gwarancjach ubezpieczeniowych dla firm budowlanych.">
+  <meta property="og:site_name" content="Gwarancje.PRO">
+  <meta name="robots" content="index, follow">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { DEFAULT: '#01696f', dark: '#0c4e54', light: '#cedcd8' },
+            accent: '#d19900'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+    .custom-scroll::-webkit-scrollbar { width: 8px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #cedcd8; border-radius: 4px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #01696f; }
+
+    .prose-custom h2 { font-size: 1.8em; font-weight: 900; margin-top: 1.5em; margin-bottom: 0.5em; color: #0f172a; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.2em; }
+    .prose-custom h3 { font-size: 1.4em; font-weight: 800; margin-top: 1.2em; margin-bottom: 0.5em; color: #1e293b; }
+    .prose-custom p { margin-bottom: 1.2em; line-height: 1.7; text-align: justify; }
+    .prose-custom ul { list-style-type: disc; margin-left: 1.5em; margin-bottom: 1.2em; }
+    .prose-custom ol { list-style-type: decimal; margin-left: 1.5em; margin-bottom: 1.2em; }
+    .prose-custom li { margin-bottom: 0.5em; }
+    .prose-custom img { max-width: 100%; height: auto; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); margin: 1.5em 0; }
+    .prose-custom iframe { width: 100%; aspect-ratio: 16/9; border-radius: 0.75rem; margin: 1.5em 0; }
+    .prose-custom blockquote { border-left: 4px solid #01696f; padding-left: 1em; font-style: italic; color: #64748b; margin: 1.5em 0; background: #f0faf9; padding: 1em; border-radius: 0 0.75rem 0.75rem 0; }
+    .prose-custom a { color: #01696f; text-decoration: underline; }
+    .prose-custom strong { color: #0c4e54; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <!-- LISTA ARTYKUŁÓW -->
+  <div id="blog-list-view">
+
+    <!-- Nawigacja -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <a href="/" class="flex items-center gap-2">
+            <span class="font-extrabold text-xl tracking-tight" style="color:#01696f">Gwarancje<span class="text-slate-400 font-normal">.PRO</span></span>
+          </a>
+          <div class="hidden md:flex space-x-6 items-center">
+            <a href="/#produkty" class="text-slate-600 hover:text-[#01696f] transition-colors font-medium text-sm">Produkty</a>
+            <a href="/blog.html" class="font-bold text-sm border-b-2 pb-0.5" style="color:#01696f;border-color:#01696f">Blog</a>
+            <a href="/#dlaczego-my" class="text-slate-600 hover:text-[#01696f] transition-colors font-medium text-sm">Dlaczego my</a>
+            <a href="/#faq" class="text-slate-600 hover:text-[#01696f] transition-colors font-medium text-sm">FAQ</a>
+            <a href="tel:+48500502702" class="text-slate-600 hover:text-[#01696f] font-semibold text-sm">📞 500 502 702</a>
+            <a href="/#kontakt" class="text-white px-5 py-2 rounded-md shadow-sm font-semibold text-sm transition-colors" style="background:#01696f" onmouseover="this.style.background='#0c4e54'" onmouseout="this.style.background='#01696f'">Zapytaj o wycenę</a>
+          </div>
+          <button onclick="document.getElementById('mob-nav-blog').classList.toggle('hidden')" class="md:hidden text-slate-500 hover:text-slate-700 text-2xl p-2">&#9776;</button>
+        </div>
+      </div>
+      <div id="mob-nav-blog" class="hidden md:hidden bg-white border-t border-slate-100 p-4 space-y-2 shadow-lg">
+        <a href="/#produkty" class="block text-slate-600 py-2 border-b border-slate-50 font-medium text-sm">Produkty</a>
+        <a href="/blog.html" class="block font-bold py-2 border-b border-slate-50 text-sm" style="color:#01696f">Blog</a>
+        <a href="/#dlaczego-my" class="block text-slate-600 py-2 border-b border-slate-50 font-medium text-sm">Dlaczego my</a>
+        <a href="/#faq" class="block text-slate-600 py-2 border-b border-slate-50 font-medium text-sm">FAQ</a>
+        <a href="tel:+48500502702" class="block py-2 border-b border-slate-50 font-semibold text-sm" style="color:#01696f">📞 500 502 702</a>
+        <a href="/#kontakt" class="block text-white text-center py-2.5 rounded-md font-bold mt-1 text-sm" style="background:#01696f">Zapytaj o wycenę</a>
+      </div>
+    </nav>
+
+    <!-- Header sekcji -->
+    <div class="py-16 sm:py-24" style="background:#111210">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl tracking-tight">Wiedza o gwarancjach</h1>
+        <p class="mt-4 text-lg max-w-2xl mx-auto" style="color:rgba(255,255,255,.65)">
+          Poradniki i aktualności o gwarancjach ubezpieczeniowych dla firm budowlanych i wykonawców. Przygotowane przez naszych ekspertów.
+        </p>
+      </div>
+    </div>
+
+    <!-- Siatka artykułów -->
+    <section class="py-12 md:py-16 min-h-[50vh]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="col-span-full py-20 text-center text-slate-400 font-medium">
+            Ładowanie artykułów…
+          </div>
+        </div>
+        <div id="blog-error" class="hidden col-span-full py-20 text-center">
+          <p class="text-slate-500 font-medium mb-2">Nie udało się załadować artykułów.</p>
+          <p class="text-slate-400 text-sm">Sprawdź połączenie lub spróbuj ponownie później.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-slate-300 py-10 md:py-12 border-t border-slate-800 mt-10" style="background:#111210">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+        <div class="md:col-span-1">
+          <span class="text-2xl font-extrabold tracking-tight" style="color:#01696f">Gwarancje<span class="text-slate-400 font-normal">.PRO</span></span>
+          <p class="text-sm mt-3 leading-relaxed" style="color:rgba(255,255,255,.45)">
+            Broker gwarancji ubezpieczeniowych dla firm budowlanych i wykonawców. Aura Consulting sp. z o.o. · Licencja KNF nr 1972/13
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4 tracking-wider uppercase text-sm">Nawigacja</h4>
+          <ul class="space-y-2 text-sm" style="color:rgba(255,255,255,.55)">
+            <li><a href="/#produkty" class="hover:text-white transition-colors">Produkty</a></li>
+            <li><a href="/blog.html" class="hover:text-white transition-colors font-semibold" style="color:#6ee7df">Blog</a></li>
+            <li><a href="/#faq" class="hover:text-white transition-colors">FAQ</a></li>
+            <li><a href="/polityka-prywatnosci.html" class="hover:text-white transition-colors">Polityka prywatności</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4 tracking-wider uppercase text-sm">Kontakt</h4>
+          <ul class="space-y-2 text-sm" style="color:rgba(255,255,255,.55)">
+            <li>✉ <a href="mailto:biuro@gwarancje.pro" class="hover:text-white transition-colors">biuro@gwarancje.pro</a></li>
+            <li>📞 <a href="tel:+48500502702" class="hover:text-white transition-colors">500 502 702</a></li>
+            <li class="pt-1 text-xs" style="color:rgba(255,255,255,.3)">ul. Bolkowska 2A/28, 01-446 Warszawa</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- CZYTNIK ARTYKUŁU (modal full-screen) -->
+  <div id="article-reader-view" class="fixed inset-0 z-50 hidden bg-white overflow-y-auto w-full h-full custom-scroll">
+    <!-- Pasek narzędziowy -->
+    <div class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 py-4 sm:px-8 flex justify-between items-center z-10 shadow-sm">
+      <button id="close-article-btn" class="text-slate-600 hover:text-[#01696f] font-bold flex items-center gap-2 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <span class="hidden sm:inline">Wróć do Bazy Wiedzy</span>
+        <span class="sm:hidden">Wróć</span>
+      </button>
+      <button id="copy-link-btn" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2.5 rounded-xl shadow-sm transition-colors flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+        Skopiuj link
+      </button>
+    </div>
+    <!-- Treść artykułu -->
+    <div class="max-w-3xl mx-auto px-4 py-12 sm:px-8 w-full pb-24">
+      <div id="reader-tags" class="flex flex-wrap gap-2 mb-6"></div>
+      <h1 id="reader-title" class="text-3xl md:text-5xl font-black text-slate-900 mb-6 leading-tight"></h1>
+      <div id="reader-date" class="text-sm text-slate-500 font-medium mb-12 border-b border-slate-100 pb-6 uppercase tracking-widest"></div>
+      <div id="reader-content" class="prose-custom text-slate-700 text-[16px] md:text-lg"></div>
+    </div>
+  </div>
+
+  <script src="blog.js" defer></script>
+</body>
+</html>

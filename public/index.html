@@ -352,7 +352,8 @@ section{padding:clamp(4rem,8vw,6rem) clamp(1rem,5vw,3rem)}
 
 /* ── PRODUKTY ── */
 #produkty{background:var(--c-surface)}
-.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem;margin-top:3rem}
+.products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3rem}
+@media(max-width:600px){.products-grid{grid-template-columns:1fr}}
 .product-card{background:var(--c-bg);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:1.75rem;transition:box-shadow var(--transition),border-color var(--transition)}
 .product-card:hover{box-shadow:var(--shadow);border-color:var(--c-primary-light)}
 .product-icon{width:44px;height:44px;border-radius:var(--r);background:var(--c-primary-light);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;font-size:1.25rem}
@@ -469,6 +470,7 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
   <a href="/" class="logo" aria-label="Gwarancje.PRO – strona główna">Gwarancje<span>.PRO</span></a>
   <nav class="nav" aria-label="Nawigacja główna" role="navigation">
     <a href="#produkty">Produkty</a>
+    <a href="/blog.html">Blog</a>
     <a href="#dlaczego-my">Dlaczego my</a>
     <a href="#proces">Jak działamy</a>
     <a href="#faq">FAQ</a>
@@ -501,7 +503,7 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
       <p class="hero-sub">Gwarancjami zajmujemy się od ponad 15 lat, w tym okresie wystawiliśmy kilka tysięcy gwarancji, dla ponad 200 firm w Polsce.</p>
       <div class="hero-btns">
         <a href="#kontakt" class="btn-primary">Zamów bezpłatną analizę →</a>
-        <a href="#produkty" class="btn-ghost">Poznaj produkty</a>
+        <a href="#produkty" class="btn-ghost">Poznaj rozwiązania</a>
       </div>
       <div class="hero-stats">
         <div>
@@ -560,7 +562,7 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
 <section id="produkty" aria-labelledby="produkty-heading">
   <div class="container">
     <div class="section-label">Obsługiwane rozwiązania</div>
-    <h2 class="section-title" id="produkty-heading">Cztery rodzaje gwarancji<br>dla każdego etapu kontraktu</h2>
+    <h2 class="section-title" id="produkty-heading">Rodzaje gwarancji<br>dla każdego etapu inwestycji</h2>
     <p class="section-sub">Od przetargu po usunięcie usterek — zabezpieczamy każdy etap realizacji inwestycji budowlanej.</p>
     <div class="products-grid">
       <div class="product-card">
@@ -582,16 +584,10 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
         <span class="product-tag">UWU</span>
       </div>
       <div class="product-card">
-        <div class="product-icon">💰</div>
-        <h3>Zwrot zaliczki</h3>
-        <p>Chroni zamawiającego przed utratą przedpłaty w razie niewykonania umowy. Niezbędna przy kontraktach z zaliczkowym finansowaniem.</p>
-        <span class="product-tag">ZAL</span>
-      </div>
-      <div class="product-card">
-        <div class="product-icon">⚡</div>
-        <h3>Inne gwarancje kontraktowe</h3>
-        <p>Gwarancje akcyzowe, celne, zapłaty, koncesyjne i inne — dopasowane do specyfiki branży i indywidualnych wymagań kontrahenta.</p>
-        <span class="product-tag">INNE</span>
+        <div class="product-icon">🔗</div>
+        <h3>Gwarancja łączona NWK&nbsp;+&nbsp;UWU</h3>
+        <p>Jeden dokument zabezpieczający zarówno fazę realizacji kontraktu, jak i okres rękojmi. Upraszcza obsługę i często obniża łączny koszt zabezpieczenia.</p>
+        <span class="product-tag">NWK+UWU</span>
       </div>
     </div>
   </div>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | Gwarancje.PRO Blog</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    #editor-quill .ql-container { font-size: 15px; min-height: 320px; border-radius: 0 0 0.5rem 0.5rem; }
+    #editor-quill .ql-toolbar { border-radius: 0.5rem 0.5rem 0 0; border-color: #e2e8f0; }
+    #editor-quill .ql-container { border-color: #e2e8f0; }
+    .post-item.active { background: #f0faf9; border-color: #01696f; }
+    .cover-drop { transition: border-color .2s, background .2s; }
+    .cover-drop.dragover { border-color: #01696f; background: #f0faf9; }
+  </style>
+</head>
+<body class="bg-slate-100 min-h-screen antialiased">
+
+<!-- ═══════════════════════════════════════════════════════ LOGIN ═══ -->
+<div id="view-login" class="min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-8">
+    <div class="text-center mb-8">
+      <span class="text-2xl font-extrabold tracking-tight" style="color:#01696f">Gwarancje<span class="text-slate-400 font-normal">.PRO</span></span>
+      <p class="text-sm text-slate-500 mt-1">Panel administracyjny bloga</p>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">E-mail</label>
+        <input id="login-email" type="email" placeholder="admin@gwarancje.pro"
+          class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#01696f] transition-colors">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Hasło</label>
+        <input id="login-password" type="password" placeholder="••••••••"
+          class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#01696f] transition-colors"
+          onkeydown="if(event.key==='Enter') doLogin()">
+      </div>
+      <p id="login-error" class="hidden text-red-500 text-xs font-medium"></p>
+      <button onclick="doLogin()"
+        class="w-full py-3 rounded-lg font-bold text-white text-sm transition-colors"
+        style="background:#01696f" onmouseover="this.style.background='#0c4e54'" onmouseout="this.style.background='#01696f'">
+        Zaloguj się
+      </button>
+    </div>
+    <p class="text-xs text-slate-400 text-center mt-6">
+      Użytkowników zarządzasz w<br>Supabase Dashboard → Authentication → Users
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ ADMIN ═══ -->
+<div id="view-admin" class="hidden min-h-screen flex flex-col">
+
+  <!-- Topbar -->
+  <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between sticky top-0 z-30 shadow-sm">
+    <div class="flex items-center gap-3">
+      <span class="font-extrabold text-lg tracking-tight" style="color:#01696f">Gwarancje<span class="text-slate-400 font-normal">.PRO</span></span>
+      <span class="text-slate-300">|</span>
+      <span class="text-sm font-semibold text-slate-600">Blog Admin</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="/blog.html" target="_blank" class="text-xs text-slate-400 hover:text-[#01696f] font-medium transition-colors">Podgląd bloga ↗</a>
+      <span id="admin-email" class="text-xs text-slate-400 font-medium hidden md:block"></span>
+      <button onclick="doLogout()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold px-3 py-1.5 rounded-lg transition-colors">Wyloguj</button>
+    </div>
+  </header>
+
+  <!-- Główny układ -->
+  <div class="flex flex-1 overflow-hidden" style="height: calc(100vh - 57px)">
+
+    <!-- Sidebar: lista postów -->
+    <aside class="w-72 bg-white border-r border-slate-200 flex flex-col flex-shrink-0">
+      <div class="p-4 border-b border-slate-100">
+        <button onclick="newPost()"
+          class="w-full py-2.5 rounded-lg font-bold text-white text-sm transition-colors flex items-center justify-center gap-2"
+          style="background:#01696f" onmouseover="this.style.background='#0c4e54'" onmouseout="this.style.background='#01696f'">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+          Nowy artykuł
+        </button>
+      </div>
+      <div id="post-list" class="flex-1 overflow-y-auto p-3 space-y-1.5">
+        <p class="text-xs text-slate-400 text-center py-8">Ładowanie…</p>
+      </div>
+    </aside>
+
+    <!-- Edytor -->
+    <main class="flex-1 overflow-y-auto bg-slate-50 p-6">
+      <div id="editor-placeholder" class="h-full flex items-center justify-center">
+        <div class="text-center text-slate-300">
+          <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          <p class="font-semibold">Wybierz artykuł lub utwórz nowy</p>
+        </div>
+      </div>
+
+      <div id="editor-form" class="hidden max-w-3xl mx-auto space-y-6">
+
+        <!-- Tytuł + slug -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Tytuł *</label>
+            <input id="f-title" type="text" placeholder="Tytuł artykułu"
+              class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-base font-semibold focus:outline-none focus:border-[#01696f] transition-colors"
+              oninput="onTitleInput(this.value)">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Slug (URL) *</label>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-slate-400 whitespace-nowrap">/blog.html#</span>
+              <input id="f-slug" type="text" placeholder="slug-artykulu"
+                class="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:border-[#01696f] transition-colors">
+              <button onclick="regenerateSlug()" title="Generuj ze tytułu"
+                class="p-2 text-slate-400 hover:text-[#01696f] transition-colors" type="button">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              </button>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Skrót / Excerpt</label>
+            <textarea id="f-excerpt" rows="2" placeholder="Krótki opis widoczny na liście artykułów…"
+              class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm resize-none focus:outline-none focus:border-[#01696f] transition-colors"></textarea>
+          </div>
+        </div>
+
+        <!-- Zdjęcie okładki -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-3">Zdjęcie okładki</label>
+
+          <!-- Podgląd -->
+          <div id="cover-preview-wrap" class="mb-4 hidden">
+            <img id="cover-preview-img" src="" alt="" class="w-full h-48 object-cover rounded-xl border border-slate-200">
+            <button onclick="removeCover()" class="mt-2 text-xs text-red-400 hover:text-red-600 font-medium transition-colors">✕ Usuń zdjęcie</button>
+          </div>
+
+          <!-- Strefa upuszczania -->
+          <div id="cover-drop"
+            class="cover-drop border-2 border-dashed border-slate-200 rounded-xl p-8 text-center cursor-pointer hover:border-[#01696f] hover:bg-[#f0faf9] transition-all"
+            onclick="document.getElementById('cover-file-input').click()"
+            ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
+            <svg class="w-10 h-10 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <p class="text-sm font-semibold text-slate-500">Kliknij lub przeciągnij zdjęcie</p>
+            <p class="text-xs text-slate-400 mt-1">JPG, PNG, WebP — maks. 5 MB</p>
+            <input id="cover-file-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden" onchange="handleFileSelect(this.files[0])">
+          </div>
+
+          <!-- URL ręczny -->
+          <div class="mt-3 flex items-center gap-2">
+            <span class="text-xs text-slate-400 whitespace-nowrap">lub wklej URL:</span>
+            <input id="f-cover-url" type="url" placeholder="https://…"
+              class="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono focus:outline-none focus:border-[#01696f] transition-colors"
+              oninput="onCoverUrlInput(this.value)">
+          </div>
+          <p id="upload-status" class="text-xs mt-2 hidden"></p>
+        </div>
+
+        <!-- Treść -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-3">Treść artykułu *</label>
+          <div id="editor-quill"></div>
+        </div>
+
+        <!-- Meta -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Tagi (przecinkami)</label>
+            <input id="f-tags" type="text" placeholder="wadium, budownictwo, przetarg"
+              class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#01696f] transition-colors">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Data publikacji</label>
+            <input id="f-published-at" type="datetime-local"
+              class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#01696f] transition-colors">
+          </div>
+        </div>
+
+        <!-- Akcje -->
+        <div class="flex items-center gap-3 pb-6">
+          <button onclick="savePost()"
+            class="px-6 py-3 rounded-xl font-bold text-white text-sm transition-colors flex items-center gap-2"
+            style="background:#01696f" onmouseover="this.style.background='#0c4e54'" onmouseout="this.style.background='#01696f'">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span id="save-label">Zapisz artykuł</span>
+          </button>
+          <button id="btn-delete" onclick="deletePost()" class="hidden px-5 py-3 rounded-xl font-bold text-red-500 text-sm bg-red-50 hover:bg-red-100 transition-colors">
+            Usuń artykuł
+          </button>
+          <p id="save-status" class="text-sm font-medium text-slate-400 ml-auto"></p>
+        </div>
+
+      </div><!-- /editor-form -->
+    </main>
+
+  </div>
+</div><!-- /view-admin -->
+
+<script>
+// ── Konfiguracja ────────────────────────────────────────────────────────────
+const SB_URL = 'https://kukvgsjrmrqtzhkszzum.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3Znc2pybXJxdHpoa3N6enVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTI0NzYsImV4cCI6MjA4ODQ4ODQ3Nn0.wOB-4CJTcRksSUY7WD7CXEccTKNxPIVF8AT8hczS5zY';
+const TABLE  = 'blog_posts';
+const BUCKET = 'blog-images';
+
+const sb = window.supabase.createClient(SB_URL, SB_KEY);
+
+// ── Stan ────────────────────────────────────────────────────────────────────
+let quill        = null;
+let currentId    = null;   // ID edytowanego posta (null = nowy)
+let selectedFile = null;   // Plik do uploadu
+let slugEdited   = false;  // Czy slug był ręcznie edytowany
+
+// ── Quill init ───────────────────────────────────────────────────────────────
+function initQuill() {
+  if (quill) return;
+  quill = new Quill('#editor-quill', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+        [{ header: [2, 3, false] }],
+        ['bold', 'italic', 'underline'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['blockquote', 'link', 'image'],
+        ['clean']
+      ]
+    }
+  });
+}
+
+// ── Auth ─────────────────────────────────────────────────────────────────────
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  errEl.classList.add('hidden');
+
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if (error) {
+    errEl.textContent = 'Nieprawidłowy e-mail lub hasło.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  showAdmin(email);
+}
+
+async function doLogout() {
+  await sb.auth.signOut();
+  document.getElementById('view-admin').classList.add('hidden');
+  document.getElementById('view-login').classList.remove('hidden');
+}
+
+async function checkSession() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) showAdmin(session.user.email);
+}
+
+function showAdmin(email) {
+  document.getElementById('view-login').classList.add('hidden');
+  document.getElementById('view-admin').classList.remove('hidden');
+  document.getElementById('admin-email').textContent = email;
+  document.getElementById('admin-email').classList.remove('hidden');
+  initQuill();
+  loadPosts();
+}
+
+// ── Lista postów ──────────────────────────────────────────────────────────────
+async function loadPosts() {
+  const { data, error } = await sb
+    .from(TABLE)
+    .select('id, title, slug, published_at')
+    .order('published_at', { ascending: false });
+
+  const list = document.getElementById('post-list');
+  if (error || !data?.length) {
+    list.innerHTML = '<p class="text-xs text-slate-400 text-center py-8">Brak artykułów.</p>';
+    return;
+  }
+  list.innerHTML = data.map(p => {
+    const date = p.published_at
+      ? new Date(p.published_at).toLocaleDateString('pl-PL', { day: 'numeric', month: 'short', year: 'numeric' })
+      : 'brak daty';
+    return `
+      <div class="post-item border border-slate-100 rounded-xl p-3 cursor-pointer hover:bg-slate-50 transition-colors"
+           id="item-${p.id}" onclick="openPost('${p.id}')">
+        <p class="text-sm font-semibold text-slate-800 leading-snug line-clamp-2">${esc(p.title)}</p>
+        <p class="text-xs text-slate-400 mt-1">${date}</p>
+      </div>`;
+  }).join('');
+}
+
+// ── Edytor ────────────────────────────────────────────────────────────────────
+function newPost() {
+  currentId    = null;
+  selectedFile = null;
+  slugEdited   = false;
+
+  document.getElementById('f-title').value       = '';
+  document.getElementById('f-slug').value        = '';
+  document.getElementById('f-excerpt').value     = '';
+  document.getElementById('f-tags').value        = '';
+  document.getElementById('f-cover-url').value   = '';
+  document.getElementById('f-published-at').value = toLocalDatetimeStr(new Date());
+  document.getElementById('save-label').textContent = 'Zapisz artykuł';
+  document.getElementById('btn-delete').classList.add('hidden');
+  document.getElementById('save-status').textContent = '';
+  hideCoverPreview();
+  initQuill();
+  quill.setContents([]);
+
+  document.getElementById('editor-placeholder').classList.add('hidden');
+  document.getElementById('editor-form').classList.remove('hidden');
+  document.querySelectorAll('.post-item').forEach(el => el.classList.remove('active'));
+  document.getElementById('f-title').focus();
+}
+
+async function openPost(id) {
+  const { data, error } = await sb.from(TABLE).select('*').eq('id', id).single();
+  if (error || !data) return;
+
+  currentId    = id;
+  selectedFile = null;
+  slugEdited   = true;
+
+  document.getElementById('f-title').value     = data.title || '';
+  document.getElementById('f-slug').value      = data.slug  || '';
+  document.getElementById('f-excerpt').value   = data.excerpt || '';
+  document.getElementById('f-tags').value      = (data.tags || []).join(', ');
+  document.getElementById('f-cover-url').value = data.cover_url || '';
+  document.getElementById('f-published-at').value = data.published_at
+    ? toLocalDatetimeStr(new Date(data.published_at)) : '';
+  document.getElementById('save-label').textContent = 'Zaktualizuj';
+  document.getElementById('btn-delete').classList.remove('hidden');
+  document.getElementById('save-status').textContent = '';
+
+  if (data.cover_url) showCoverPreview(data.cover_url);
+  else hideCoverPreview();
+
+  initQuill();
+  quill.clipboard.dangerouslyPasteHTML(data.content || '');
+
+  document.getElementById('editor-placeholder').classList.add('hidden');
+  document.getElementById('editor-form').classList.remove('hidden');
+  document.querySelectorAll('.post-item').forEach(el => el.classList.remove('active'));
+  document.getElementById(`item-${id}`)?.classList.add('active');
+}
+
+// ── Zapis ─────────────────────────────────────────────────────────────────────
+async function savePost() {
+  const title = document.getElementById('f-title').value.trim();
+  const slug  = document.getElementById('f-slug').value.trim();
+  if (!title || !slug) { setStatus('Uzupełnij tytuł i slug.', 'red'); return; }
+
+  setStatus('Zapisywanie…', 'gray');
+
+  // Upload zdjęcia jeśli wybrane
+  let coverUrl = document.getElementById('f-cover-url').value.trim() || null;
+  if (selectedFile) {
+    try {
+      coverUrl = await uploadImage(selectedFile);
+      document.getElementById('f-cover-url').value = coverUrl;
+      selectedFile = null;
+    } catch (e) {
+      setStatus('Błąd uploadu zdjęcia: ' + e.message, 'red');
+      return;
+    }
+  }
+
+  const tags = document.getElementById('f-tags').value
+    .split(',').map(t => t.trim()).filter(Boolean);
+
+  const publishedAt = document.getElementById('f-published-at').value;
+  const payload = {
+    title,
+    slug,
+    excerpt: document.getElementById('f-excerpt').value.trim() || null,
+    content: quill.root.innerHTML,
+    tags,
+    cover_url: coverUrl,
+    published_at: publishedAt ? new Date(publishedAt).toISOString() : null,
+  };
+
+  let error;
+  if (currentId) {
+    ({ error } = await sb.from(TABLE).update(payload).eq('id', currentId));
+  } else {
+    let data;
+    ({ data, error } = await sb.from(TABLE).insert(payload).select().single());
+    if (!error && data) currentId = data.id;
+  }
+
+  if (error) { setStatus('Błąd: ' + error.message, 'red'); return; }
+
+  setStatus('✓ Zapisano!', 'green');
+  document.getElementById('save-label').textContent = 'Zaktualizuj';
+  document.getElementById('btn-delete').classList.remove('hidden');
+  loadPosts();
+  setTimeout(() => setStatus('', ''), 3000);
+}
+
+// ── Usuń post ─────────────────────────────────────────────────────────────────
+async function deletePost() {
+  if (!currentId) return;
+  if (!confirm('Usunąć artykuł? Tej operacji nie można cofnąć.')) return;
+
+  const { error } = await sb.from(TABLE).delete().eq('id', currentId);
+  if (error) { setStatus('Błąd: ' + error.message, 'red'); return; }
+
+  currentId = null;
+  document.getElementById('editor-form').classList.add('hidden');
+  document.getElementById('editor-placeholder').classList.remove('hidden');
+  loadPosts();
+}
+
+// ── Upload zdjęcia ────────────────────────────────────────────────────────────
+async function uploadImage(file) {
+  const ext  = file.name.split('.').pop().toLowerCase() || 'jpg';
+  const name = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+
+  setUploadStatus('⏳ Wgrywanie…', 'slate');
+  const { error: upErr } = await sb.storage.from(BUCKET).upload(name, file, {
+    contentType: file.type,
+    upsert: false,
+  });
+  if (upErr) { setUploadStatus('', ''); throw upErr; }
+
+  const { data } = sb.storage.from(BUCKET).getPublicUrl(name);
+  setUploadStatus('✓ Wgrano!', 'green');
+  setTimeout(() => setUploadStatus('', ''), 3000);
+  return data.publicUrl;
+}
+
+function handleFileSelect(file) {
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    alert('Plik jest za duży (maks. 5 MB). Skompresuj zdjęcie i spróbuj ponownie.');
+    return;
+  }
+  selectedFile = file;
+  const url = URL.createObjectURL(file);
+  showCoverPreview(url);
+  setUploadStatus('Zdjęcie wybrane — zostanie wgrane przy zapisie.', 'slate');
+}
+
+function onCoverUrlInput(val) {
+  selectedFile = null;
+  if (val) showCoverPreview(val);
+  else hideCoverPreview();
+  setUploadStatus('', '');
+}
+
+function showCoverPreview(src) {
+  document.getElementById('cover-preview-img').src = src;
+  document.getElementById('cover-preview-wrap').classList.remove('hidden');
+  document.getElementById('cover-drop').classList.add('hidden');
+}
+
+function hideCoverPreview() {
+  document.getElementById('cover-preview-wrap').classList.add('hidden');
+  document.getElementById('cover-drop').classList.remove('hidden');
+  document.getElementById('cover-preview-img').src = '';
+}
+
+function removeCover() {
+  selectedFile = null;
+  document.getElementById('f-cover-url').value = '';
+  hideCoverPreview();
+  setUploadStatus('', '');
+}
+
+// Drag & drop
+function dragOver(e)  { e.preventDefault(); document.getElementById('cover-drop').classList.add('dragover'); }
+function dragLeave(e) { document.getElementById('cover-drop').classList.remove('dragover'); }
+function dropFile(e)  {
+  e.preventDefault();
+  document.getElementById('cover-drop').classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) handleFileSelect(file);
+}
+
+// ── Slug utils ────────────────────────────────────────────────────────────────
+function onTitleInput(val) {
+  if (!slugEdited) document.getElementById('f-slug').value = slugify(val);
+}
+
+function regenerateSlug() {
+  const title = document.getElementById('f-title').value;
+  document.getElementById('f-slug').value = slugify(title);
+  slugEdited = false;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('f-slug').addEventListener('input', () => { slugEdited = true; });
+});
+
+function slugify(str) {
+  const map = {ą:'a',ć:'c',ę:'e',ł:'l',ń:'n',ó:'o',ś:'s',ź:'z',ż:'z',Ą:'a',Ć:'c',Ę:'e',Ł:'l',Ń:'n',Ó:'o',Ś:'s',Ź:'z',Ż:'z'};
+  return str.split('').map(c => map[c] || c).join('')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function toLocalDatetimeStr(date) {
+  const pad = n => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function setStatus(msg, color) {
+  const el = document.getElementById('save-status');
+  el.textContent = msg;
+  el.style.color = color === 'red' ? '#ef4444' : color === 'green' ? '#01696f' : '#94a3b8';
+}
+
+function setUploadStatus(msg, color) {
+  const el = document.getElementById('upload-status');
+  if (!msg) { el.classList.add('hidden'); return; }
+  el.textContent = msg;
+  el.style.color = color === 'green' ? '#01696f' : color === 'red' ? '#ef4444' : '#94a3b8';
+  el.classList.remove('hidden');
+}
+
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+}
+
+// ── Start ─────────────────────────────────────────────────────────────────────
+checkSession();
+</script>
+</body>
+</html>

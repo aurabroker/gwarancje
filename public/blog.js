@@ -4,7 +4,7 @@ const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 const TABLE    = 'aura_articles';
 const PLATFORM = 'Gwarancje.pro';
 
-const supabase = window.supabase.createClient(SB_URL, SB_KEY);
+const sbClient = window.supabase.createClient(SB_URL, SB_KEY);
 
 let currentArticle = null;
 
@@ -22,7 +22,7 @@ async function loadArticles() {
   const errEl = document.getElementById('blog-error');
 
   try {
-    const { data: posts, error } = await supabase
+    const { data: posts, error } = await sbClient
       .from(TABLE)
       .select('id, title, excerpt, tags, published_at, created_at, thumbnail_url')
       .eq('status', 'published')
@@ -88,7 +88,7 @@ async function openArticle(id) {
   document.getElementById('reader-tags').innerHTML    = '';
 
   try {
-    const { data, error } = await supabase
+    const { data, error } = await sbClient
       .from(TABLE)
       .select('*')
       .eq('id', id)

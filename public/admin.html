@@ -20,6 +20,9 @@
     .post-item.active { background: #f0faf9; border-color: #01696f; }
     .cover-drop { transition: border-color .2s, background .2s; }
     .cover-drop.dragover { border-color: #01696f; background: #f0faf9; }
+    .tab-btn { color: #64748b; }
+    .tab-btn:hover { background: #f1f5f9; }
+    .tab-btn.active { background: #f0faf9; color: #01696f; }
   </style>
 </head>
 <body class="bg-slate-100 min-h-screen antialiased">
@@ -64,7 +67,13 @@
     <div class="flex items-center gap-3">
       <span class="font-extrabold text-lg tracking-tight" style="color:#01696f">Gwarancje<span class="text-slate-400 font-normal">.PRO</span></span>
       <span class="text-slate-300">|</span>
-      <span class="text-sm font-semibold text-slate-600">Blog Admin</span>
+      <span class="text-sm font-semibold text-slate-600">Panel</span>
+      <nav class="ml-4 flex items-center gap-1" id="admin-tabs">
+        <button data-tab="posts" onclick="showTab('posts')" class="tab-btn text-xs font-bold px-3 py-1.5 rounded-lg transition-colors">Artykuły</button>
+        <button data-tab="leads" onclick="showTab('leads')" class="tab-btn text-xs font-bold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+          Zgłoszenia <span id="leads-badge" class="hidden bg-red-500 text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded-full"></span>
+        </button>
+      </nav>
     </div>
     <div class="flex items-center gap-4">
       <a href="/blog.html" target="_blank" class="text-xs text-slate-400 hover:text-[#01696f] font-medium transition-colors">Podgląd bloga ↗</a>
@@ -73,8 +82,32 @@
     </div>
   </header>
 
+  <!-- Zgłoszenia z formularza (tabela gwarancje_leads) -->
+  <div id="view-leads" class="hidden flex-1 overflow-y-auto bg-slate-50 p-6" style="height: calc(100vh - 57px)">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex items-center justify-between mb-4 gap-3 flex-wrap">
+        <div>
+          <h2 class="text-lg font-extrabold text-slate-800">Zgłoszenia z formularza</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Formularz „Wyślij zapytanie” na gwarancje.pro. Powiadomienia idą na biuro@gwarancje.pro.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <select id="leads-filter" onchange="loadLeads()" class="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:border-[#01696f]">
+            <option value="">Wszystkie statusy</option>
+            <option value="nowe" selected>Nowe</option>
+            <option value="w_toku">W toku</option>
+            <option value="zamkniete">Zamknięte</option>
+          </select>
+          <button onclick="loadLeads()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold px-3 py-2 rounded-lg transition-colors">Odśwież</button>
+        </div>
+      </div>
+      <div id="leads-list" class="space-y-3">
+        <p class="text-xs text-slate-400 text-center py-8">Ładowanie…</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Główny układ -->
-  <div class="flex flex-1 overflow-hidden" style="height: calc(100vh - 57px)">
+  <div id="view-posts" class="flex flex-1 overflow-hidden" style="height: calc(100vh - 57px)">
 
     <!-- Sidebar: lista postów -->
     <aside class="w-72 bg-white border-r border-slate-200 flex flex-col flex-shrink-0">
@@ -207,6 +240,7 @@
 const SB_URL = 'https://kukvgsjrmrqtzhkszzum.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3Znc2pybXJxdHpoa3N6enVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTI0NzYsImV4cCI6MjA4ODQ4ODQ3Nn0.wOB-4CJTcRksSUY7WD7CXEccTKNxPIVF8AT8hczS5zY';
 const TABLE  = 'blog_posts';
+const LEADS_TABLE = 'gwarancje_leads';
 const BUCKET = 'blog-images';
 
 const sb = window.supabase.createClient(SB_URL, SB_KEY);
@@ -268,6 +302,99 @@ function showAdmin(email) {
   document.getElementById('admin-email').classList.remove('hidden');
   initQuill();
   loadPosts();
+  showTab(localStorage.getItem('admin-tab') || 'posts');
+  refreshLeadsBadge();
+}
+
+// ── Zakładki ──────────────────────────────────────────────────────────────────
+function showTab(name) {
+  document.getElementById('view-posts').classList.toggle('hidden', name !== 'posts');
+  document.getElementById('view-leads').classList.toggle('hidden', name !== 'leads');
+  document.querySelectorAll('#admin-tabs .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  try { localStorage.setItem('admin-tab', name); } catch {}
+  if (name === 'leads') loadLeads();
+}
+
+// ── Zgłoszenia (gwarancje_leads) ──────────────────────────────────────────────
+const LEAD_STATUS = { nowe: 'Nowe', w_toku: 'W toku', zamkniete: 'Zamknięte' };
+
+async function refreshLeadsBadge() {
+  const { count, error } = await sb.from(LEADS_TABLE).select('id', { count: 'exact', head: true }).eq('status', 'nowe');
+  const badge = document.getElementById('leads-badge');
+  if (error || !count) { badge.classList.add('hidden'); return; }
+  badge.textContent = count;
+  badge.classList.remove('hidden');
+}
+
+async function loadLeads() {
+  const list = document.getElementById('leads-list');
+  const filter = document.getElementById('leads-filter').value;
+  let q = sb.from(LEADS_TABLE).select('*').order('created_at', { ascending: false }).limit(200);
+  if (filter) q = q.eq('status', filter);
+  const { data, error } = await q;
+
+  if (error) {
+    list.innerHTML = `<p class="text-xs text-red-500 text-center py-8">Błąd: ${esc(error.message)}</p>`;
+    return;
+  }
+  if (!data?.length) {
+    list.innerHTML = '<p class="text-xs text-slate-400 text-center py-8">Brak zgłoszeń.</p>';
+    refreshLeadsBadge();
+    return;
+  }
+
+  list.innerHTML = data.map(l => {
+    const date = new Date(l.created_at).toLocaleString('pl-PL', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    const mail = l.mail_wyslany
+      ? '<span class="text-[10px] font-bold text-emerald-600">✓ e-mail wysłany</span>'
+      : `<span class="text-[10px] font-bold text-amber-600" title="${esc(l.mail_blad || '')}">⚠ e-mail niewysłany${l.mail_blad ? ': ' + esc(l.mail_blad.slice(0, 60)) : ''}</span>`;
+    const statusOpts = Object.entries(LEAD_STATUS)
+      .map(([k, v]) => `<option value="${k}" ${l.status === k ? 'selected' : ''}>${v}</option>`).join('');
+    return `
+      <div class="bg-white rounded-2xl border ${l.status === 'nowe' ? 'border-[#01696f]/40' : 'border-slate-200'} p-5">
+        <div class="flex items-start justify-between gap-4 flex-wrap">
+          <div class="min-w-0">
+            <p class="text-base font-bold text-slate-800">${esc(l.imie_nazwisko)}
+              ${l.produkt ? `<span class="ml-2 text-[10px] font-bold uppercase tracking-wide text-[#01696f] bg-[#f0faf9] px-2 py-0.5 rounded-full">${esc(l.produkt)}</span>` : ''}
+            </p>
+            <p class="text-xs text-slate-400 mt-0.5">${date} · ${mail}</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <select onchange="updateLeadStatus('${l.id}', this.value)" class="border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold bg-white focus:outline-none focus:border-[#01696f]">${statusOpts}</select>
+            <button onclick="deleteLead('${l.id}')" class="text-xs text-red-400 hover:text-red-600 font-medium px-2 py-1.5 transition-colors" title="Usuń zgłoszenie">Usuń</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-1.5 mt-4 text-sm">
+          <p><span class="text-xs font-bold text-slate-400 uppercase tracking-wide">NIP</span><br>${esc(l.nip || '—')}</p>
+          <p><span class="text-xs font-bold text-slate-400 uppercase tracking-wide">E-mail</span><br><a href="mailto:${esc(l.email)}" class="text-[#01696f] hover:underline">${esc(l.email)}</a></p>
+          <p><span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Telefon</span><br>${l.telefon ? `<a href="tel:${esc(l.telefon.replace(/\s/g, ''))}" class="text-[#01696f] hover:underline">${esc(l.telefon)}</a>` : '—'}</p>
+        </div>
+        ${l.wiadomosc ? `<p class="mt-3 text-sm text-slate-700 bg-slate-50 rounded-lg px-4 py-3 whitespace-pre-wrap">${esc(l.wiadomosc)}</p>` : ''}
+        <div class="mt-3">
+          <textarea rows="2" placeholder="Notatki wewnętrzne…" onblur="saveLeadNote('${l.id}', this.value)"
+            class="w-full border border-slate-200 rounded-lg px-3 py-2 text-xs resize-none focus:outline-none focus:border-[#01696f] transition-colors">${esc(l.notatki || '')}</textarea>
+        </div>
+      </div>`;
+  }).join('');
+  refreshLeadsBadge();
+}
+
+async function updateLeadStatus(id, status) {
+  const { error } = await sb.from(LEADS_TABLE).update({ status }).eq('id', id);
+  if (error) { alert('Błąd zapisu statusu: ' + error.message); return; }
+  refreshLeadsBadge();
+}
+
+async function saveLeadNote(id, text) {
+  const { error } = await sb.from(LEADS_TABLE).update({ notatki: text.trim() || null }).eq('id', id);
+  if (error) alert('Błąd zapisu notatki: ' + error.message);
+}
+
+async function deleteLead(id) {
+  if (!confirm('Usunąć to zgłoszenie? Tej operacji nie można cofnąć.')) return;
+  const { error } = await sb.from(LEADS_TABLE).delete().eq('id', id);
+  if (error) { alert('Błąd: ' + error.message); return; }
+  loadLeads();
 }
 
 // ── Lista postów ──────────────────────────────────────────────────────────────

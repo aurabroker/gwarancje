@@ -446,7 +446,12 @@ section{padding:clamp(4rem,8vw,6rem) clamp(1rem,5vw,3rem)}
 .form-input:focus,.form-select:focus{border-color:rgba(110,231,223,.5)}
 .form-select option{background:#1a1a18;color:#fff}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.form-error{display:none;font-size:.8rem;color:#f87171;margin-top:.375rem}
+.form-error{display:none;font-size:.875rem;color:#f87171;margin-top:.75rem;text-align:center}
+.form-hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.form-consent{display:flex;gap:.625rem;align-items:flex-start;font-size:.8rem;line-height:1.5;color:rgba(255,255,255,.6);margin-bottom:.5rem;cursor:pointer}
+.form-consent input{margin-top:.2rem;flex-shrink:0;accent-color:var(--c-primary)}
+.form-consent a{color:#6ee7df;text-decoration:underline}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed}
 .form-success{display:none;background:rgba(110,231,223,.1);border:1px solid rgba(110,231,223,.3);border-radius:var(--r);padding:1rem;color:#6ee7df;font-size:.875rem;margin-top:1rem;text-align:center}
 .btn-submit{width:100%;padding:1rem;background:var(--c-primary);color:#fff;border-radius:var(--r);font-weight:700;font-size:1rem;transition:background var(--transition);margin-top:.5rem}
 .btn-submit:hover{background:var(--c-primary-h)}
@@ -775,30 +780,30 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
         </div>
       </div>
       <div class="contact-form">
-        <form id="contact-form" onsubmit="submitForm(event)">
+        <form id="contact-form" onsubmit="submitForm(event)" novalidate>
           <div class="form-row">
             <div class="form-field">
-              <label class="form-label">Imię i nazwisko *</label>
-              <input class="form-input" type="text" placeholder="Jan Kowalski" required>
+              <label class="form-label" for="f-imie">Imię i nazwisko *</label>
+              <input class="form-input" id="f-imie" name="imie_nazwisko" type="text" placeholder="Jan Kowalski" autocomplete="name" maxlength="150" required>
             </div>
             <div class="form-field">
-              <label class="form-label">NIP firmy *</label>
-              <input class="form-input" type="text" placeholder="0000000000" required>
+              <label class="form-label" for="f-nip">NIP firmy *</label>
+              <input class="form-input" id="f-nip" name="nip" type="text" inputmode="numeric" placeholder="0000000000" maxlength="20" required>
             </div>
           </div>
           <div class="form-row">
             <div class="form-field">
-              <label class="form-label">E-mail *</label>
-              <input class="form-input" type="email" placeholder="adres@firma.pl" required>
+              <label class="form-label" for="f-email">E-mail *</label>
+              <input class="form-input" id="f-email" name="email" type="email" placeholder="adres@firma.pl" autocomplete="email" maxlength="254" required>
             </div>
             <div class="form-field">
-              <label class="form-label">Telefon</label>
-              <input class="form-input" type="tel" placeholder="500 000 000">
+              <label class="form-label" for="f-tel">Telefon</label>
+              <input class="form-input" id="f-tel" name="telefon" type="tel" placeholder="500 000 000" autocomplete="tel" maxlength="40">
             </div>
           </div>
           <div class="form-field">
-            <label class="form-label">Czego szukasz?</label>
-            <select class="form-select">
+            <label class="form-label" for="f-produkt">Czego szukasz?</label>
+            <select class="form-select" id="f-produkt" name="produkt">
               <option value="">Wybierz produkt</option>
               <option>Gwarancja wadialna</option>
               <option>Należyte wykonanie (NWK)</option>
@@ -809,10 +814,20 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
             </select>
           </div>
           <div class="form-field">
-            <label class="form-label">Wiadomość</label>
-            <input class="form-input" type="text" placeholder="Opcjonalnie: kwota, termin przetargu, wymagania...">
+            <label class="form-label" for="f-msg">Wiadomość</label>
+            <input class="form-input" id="f-msg" name="wiadomosc" type="text" placeholder="Opcjonalnie: kwota, termin przetargu, wymagania..." maxlength="3000">
           </div>
-          <button type="submit" class="btn-submit">Wyślij zapytanie →</button>
+          <!-- Pułapka na boty: niewidoczne dla ludzi, boty wypełniają -->
+          <div class="form-hp" aria-hidden="true">
+            <label for="f-www">Strona www firmy</label>
+            <input id="f-www" name="firma_www" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <label class="form-consent">
+            <input type="checkbox" name="rodo_zgoda" required>
+            <span>Wyrażam zgodę na przetwarzanie moich danych przez Aura Consulting sp. z o.o. w celu odpowiedzi na zapytanie. <a href="/polityka-prywatnosci.html" target="_blank" rel="noopener">Polityka prywatności</a> *</span>
+          </label>
+          <button type="submit" class="btn-submit" id="btn-submit">Wyślij zapytanie →</button>
+          <div class="form-error" id="form-error" role="alert"></div>
           <div class="form-success" id="form-success">✓ Dziękujemy! Odezwiemy się w ciągu 2 godzin w dni robocze.</div>
         </form>
       </div>
@@ -888,10 +903,46 @@ function toggleMenu(btn){
     nav.style.zIndex = '99';
   }
 }
-function submitForm(e){
+const FORM_ENDPOINT = 'https://kukvgsjrmrqtzhkszzum.supabase.co/functions/v1/gwarancje-submit';
+async function submitForm(e){
   e.preventDefault();
-  document.getElementById('form-success').style.display = 'block';
-  e.target.querySelectorAll('input,select,button[type=submit]').forEach(el=>el.disabled=true);
+  const form = e.target;
+  const btn = document.getElementById('btn-submit');
+  const errEl = document.getElementById('form-error');
+  errEl.style.display = 'none';
+  errEl.textContent = '';
+
+  if(!form.checkValidity()){
+    errEl.textContent = 'Uzupełnij wymagane pola (imię i nazwisko, NIP, e-mail, zgoda).';
+    errEl.style.display = 'block';
+    form.querySelector(':invalid')?.focus();
+    return;
+  }
+
+  const data = Object.fromEntries(new FormData(form).entries());
+  data.rodo_zgoda = form.elements.rodo_zgoda.checked;
+
+  btn.disabled = true;
+  const label = btn.textContent;
+  btn.textContent = 'Wysyłanie…';
+  try{
+    const res = await fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+    const out = await res.json().catch(()=>({}));
+    if(!res.ok || !out.ok){
+      throw new Error(out.error || 'Nie udało się wysłać zapytania. Zadzwoń: 500 502 702.');
+    }
+    document.getElementById('form-success').style.display = 'block';
+    form.querySelectorAll('input,select,button[type=submit]').forEach(el=>el.disabled=true);
+  }catch(err){
+    errEl.textContent = err.message || 'Nie udało się wysłać zapytania. Zadzwoń: 500 502 702.';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = label;
+  }
 }
 // Smooth active nav highlight
 const sections = document.querySelectorAll('section[id]');

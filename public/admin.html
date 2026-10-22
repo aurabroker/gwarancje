@@ -144,9 +144,9 @@
               oninput="onTitleInput(this.value)">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Slug (URL) *</label>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Slug</label>
             <div class="flex items-center gap-2">
-              <span class="text-xs text-slate-400 whitespace-nowrap">/blog.html#</span>
+              <span class="text-xs text-slate-400 whitespace-nowrap">opcjonalnie</span>
               <input id="f-slug" type="text" placeholder="slug-artykulu"
                 class="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:border-[#01696f] transition-colors">
               <button onclick="regenerateSlug()" title="Generuj ze tytułu"
@@ -202,7 +202,15 @@
         </div>
 
         <!-- Meta -->
-        <div class="bg-white rounded-2xl border border-slate-200 p-6 grid grid-cols-2 gap-4">
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Status</label>
+            <select id="f-status"
+              class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:border-[#01696f] transition-colors">
+              <option value="published">Opublikowany</option>
+              <option value="draft">Szkic (niewidoczny na blogu)</option>
+            </select>
+          </div>
           <div>
             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Tagi (przecinkami)</label>
             <input id="f-tags" type="text" placeholder="wadium, budownictwo, przetarg"
@@ -226,6 +234,9 @@
           <button id="btn-delete" onclick="deletePost()" class="hidden px-5 py-3 rounded-xl font-bold text-red-500 text-sm bg-red-50 hover:bg-red-100 transition-colors">
             Usuń artykuł
           </button>
+          <a id="btn-preview" href="#" target="_blank" class="hidden px-5 py-3 rounded-xl font-bold text-slate-600 text-sm bg-slate-100 hover:bg-slate-200 transition-colors">
+            Podgląd ↗
+          </a>
           <p id="save-status" class="text-sm font-medium text-slate-400 ml-auto"></p>
         </div>
 
@@ -239,9 +250,10 @@
 // ── Konfiguracja ────────────────────────────────────────────────────────────
 const SB_URL = 'https://kukvgsjrmrqtzhkszzum.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3Znc2pybXJxdHpoa3N6enVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTI0NzYsImV4cCI6MjA4ODQ4ODQ3Nn0.wOB-4CJTcRksSUY7WD7CXEccTKNxPIVF8AT8hczS5zY';
-const TABLE  = 'blog_posts';
+const TABLE    = 'aura_articles';   // ta sama tabela, z której czyta blog.js
+const PLATFORM = 'Gwarancje.pro';   // artykuły tej strony: platforms @> [PLATFORM]
 const LEADS_TABLE = 'gwarancje_leads';
-const BUCKET = 'blog-images';
+const BUCKET   = 'article-images';  // istniejący publiczny bucket (upload: authenticated)
 
 const sb = window.supabase.createClient(SB_URL, SB_KEY);
 
@@ -399,25 +411,34 @@ async function deleteLead(id) {
 
 // ── Lista postów ──────────────────────────────────────────────────────────────
 async function loadPosts() {
+  // Ta sama kolejność co na blogu (blog.js: created_at desc).
   const { data, error } = await sb
     .from(TABLE)
-    .select('id, title, slug, published_at')
-    .order('published_at', { ascending: false });
+    .select('id, title, status, published_at, created_at')
+    .contains('platforms', [PLATFORM])
+    .order('created_at', { ascending: false });
 
   const list = document.getElementById('post-list');
-  if (error || !data?.length) {
+  if (error) {
+    list.innerHTML = `<p class="text-xs text-red-500 text-center py-8">Błąd: ${esc(error.message)}</p>`;
+    return;
+  }
+  if (!data?.length) {
     list.innerHTML = '<p class="text-xs text-slate-400 text-center py-8">Brak artykułów.</p>';
     return;
   }
   list.innerHTML = data.map(p => {
-    const date = p.published_at
-      ? new Date(p.published_at).toLocaleDateString('pl-PL', { day: 'numeric', month: 'short', year: 'numeric' })
+    const when = p.published_at || p.created_at;
+    const date = when
+      ? new Date(when).toLocaleDateString('pl-PL', { day: 'numeric', month: 'short', year: 'numeric' })
       : 'brak daty';
+    const draft = p.status !== 'published'
+      ? '<span class="ml-1.5 text-[10px] font-bold uppercase text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">szkic</span>' : '';
     return `
       <div class="post-item border border-slate-100 rounded-xl p-3 cursor-pointer hover:bg-slate-50 transition-colors"
            id="item-${p.id}" onclick="openPost('${p.id}')">
         <p class="text-sm font-semibold text-slate-800 leading-snug line-clamp-2">${esc(p.title)}</p>
-        <p class="text-xs text-slate-400 mt-1">${date}</p>
+        <p class="text-xs text-slate-400 mt-1">${date}${draft}</p>
       </div>`;
   }).join('');
 }
@@ -433,9 +454,11 @@ function newPost() {
   document.getElementById('f-excerpt').value     = '';
   document.getElementById('f-tags').value        = '';
   document.getElementById('f-cover-url').value   = '';
+  document.getElementById('f-status').value      = 'published';
   document.getElementById('f-published-at').value = toLocalDatetimeStr(new Date());
   document.getElementById('save-label').textContent = 'Zapisz artykuł';
   document.getElementById('btn-delete').classList.add('hidden');
+  document.getElementById('btn-preview').classList.add('hidden');
   document.getElementById('save-status').textContent = '';
   hideCoverPreview();
   initQuill();
@@ -459,14 +482,17 @@ async function openPost(id) {
   document.getElementById('f-slug').value      = data.slug  || '';
   document.getElementById('f-excerpt').value   = data.excerpt || '';
   document.getElementById('f-tags').value      = (data.tags || []).join(', ');
-  document.getElementById('f-cover-url').value = data.cover_url || '';
+  document.getElementById('f-cover-url').value = data.thumbnail_url || '';
+  document.getElementById('f-status').value    = data.status === 'published' ? 'published' : 'draft';
   document.getElementById('f-published-at').value = data.published_at
     ? toLocalDatetimeStr(new Date(data.published_at)) : '';
   document.getElementById('save-label').textContent = 'Zaktualizuj';
   document.getElementById('btn-delete').classList.remove('hidden');
+  document.getElementById('btn-preview').href = `/blog.html#${id}`;
+  document.getElementById('btn-preview').classList.remove('hidden');
   document.getElementById('save-status').textContent = '';
 
-  if (data.cover_url) showCoverPreview(data.cover_url);
+  if (data.thumbnail_url) showCoverPreview(data.thumbnail_url);
   else hideCoverPreview();
 
   initQuill();
@@ -481,8 +507,11 @@ async function openPost(id) {
 // ── Zapis ─────────────────────────────────────────────────────────────────────
 async function savePost() {
   const title = document.getElementById('f-title').value.trim();
-  const slug  = document.getElementById('f-slug').value.trim();
-  if (!title || !slug) { setStatus('Uzupełnij tytuł i slug.', 'red'); return; }
+  const slug  = document.getElementById('f-slug').value.trim() || slugify(title);
+  const content = quill ? quill.root.innerHTML : '';
+  const contentEmpty = !quill || quill.getText().trim() === '' && !content.includes('<img');
+  if (!title) { setStatus('Uzupełnij tytuł.', 'red'); return; }
+  if (contentEmpty) { setStatus('Treść artykułu nie może być pusta.', 'red'); return; }
 
   setStatus('Zapisywanie…', 'gray');
 
@@ -503,30 +532,36 @@ async function savePost() {
     .split(',').map(t => t.trim()).filter(Boolean);
 
   const publishedAt = document.getElementById('f-published-at').value;
+  const status = document.getElementById('f-status').value === 'published' ? 'published' : 'draft';
   const payload = {
     title,
     slug,
     excerpt: document.getElementById('f-excerpt').value.trim() || null,
-    content: quill.root.innerHTML,
+    content,
     tags,
-    cover_url: coverUrl,
+    thumbnail_url: coverUrl,      // blog.js pokazuje okładkę z thumbnail_url
+    status,
     published_at: publishedAt ? new Date(publishedAt).toISOString() : null,
+    ai_generated: false,
   };
 
   let error;
   if (currentId) {
+    // platforms zostają bez zmian — artykuł może być współdzielony z innymi stronami.
     ({ error } = await sb.from(TABLE).update(payload).eq('id', currentId));
   } else {
     let data;
-    ({ data, error } = await sb.from(TABLE).insert(payload).select().single());
+    ({ data, error } = await sb.from(TABLE).insert({ ...payload, platforms: [PLATFORM] }).select('id').single());
     if (!error && data) currentId = data.id;
   }
 
   if (error) { setStatus('Błąd: ' + error.message, 'red'); return; }
 
-  setStatus('✓ Zapisano!', 'green');
+  setStatus(status === 'published' ? '✓ Zapisano i opublikowano' : '✓ Zapisano jako szkic', 'green');
   document.getElementById('save-label').textContent = 'Zaktualizuj';
   document.getElementById('btn-delete').classList.remove('hidden');
+  document.getElementById('btn-preview').href = `/blog.html#${currentId}`;
+  document.getElementById('btn-preview').classList.remove('hidden');
   loadPosts();
   setTimeout(() => setStatus('', ''), 3000);
 }
@@ -534,12 +569,23 @@ async function savePost() {
 // ── Usuń post ─────────────────────────────────────────────────────────────────
 async function deletePost() {
   if (!currentId) return;
-  if (!confirm('Usunąć artykuł? Tej operacji nie można cofnąć.')) return;
+  const { data: row, error: readErr } = await sb.from(TABLE).select('platforms').eq('id', currentId).single();
+  if (readErr) { setStatus('Błąd: ' + readErr.message, 'red'); return; }
 
-  const { error } = await sb.from(TABLE).delete().eq('id', currentId);
+  const others = (row?.platforms || []).filter(p => p !== PLATFORM);
+  let error;
+  if (others.length) {
+    // Artykuł jest też na innych stronach (np. auraconsulting.pl) — zdejmujemy go tylko z Gwarancje.pro.
+    if (!confirm(`Ten artykuł jest też na: ${others.join(', ')}.\nZdjąć go tylko z Gwarancje.pro? (Tam zostanie bez zmian.)`)) return;
+    ({ error } = await sb.from(TABLE).update({ platforms: others }).eq('id', currentId));
+  } else {
+    if (!confirm('Usunąć artykuł? Tej operacji nie można cofnąć.')) return;
+    ({ error } = await sb.from(TABLE).delete().eq('id', currentId));
+  }
   if (error) { setStatus('Błąd: ' + error.message, 'red'); return; }
 
   currentId = null;
+  document.getElementById('btn-preview').classList.add('hidden');
   document.getElementById('editor-form').classList.add('hidden');
   document.getElementById('editor-placeholder').classList.remove('hidden');
   loadPosts();

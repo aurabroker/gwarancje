@@ -1,0 +1,55 @@
+name: Build blog
+
+on:
+  workflow_dispatch:
+  schedule:
+    # co 6 godzin (UTC); minuta 17, żeby nie trafiać w szczyt o pełnej godzinie.
+    # Harmonogram działa dopiero, gdy ten plik jest na gałęzi domyślnej (main).
+    - cron: '17 */6 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build-blog.mjs'
+      - '.github/workflows/build-blog.yml'
+
+permissions:
+  contents: write
+
+# Jeden przebieg naraz — kolejny czeka, zamiast nadpisywać commit poprzedniego.
+concurrency:
+  group: build-blog
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pobierz repozytorium
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Wygeneruj statyczne strony bloga
+        run: node scripts/build-blog.mjs
+        env:
+          # Opcjonalny sekret; pusta wartość = publiczny klucz anon wpisany w skrypcie.
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+      - name: Commit i push (tylko gdy są zmiany)
+        run: |
+          git add -A public
+          if git diff --cached --quiet; then
+            echo "Brak zmian — nic do zatwierdzenia."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(blog): regenerate static articles"
+          # main mógł pójść do przodu w trakcie buildu (merge PR) — dociągamy i wypychamy bez force.
+          git pull --rebase origin main
+          git push origin HEAD:main

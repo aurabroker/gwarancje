@@ -76,7 +76,7 @@
       </nav>
     </div>
     <div class="flex items-center gap-4">
-      <a href="/blog.html" target="_blank" class="text-xs text-slate-400 hover:text-[#01696f] font-medium transition-colors">Podgląd bloga ↗</a>
+      <a href="/blog" target="_blank" class="text-xs text-slate-400 hover:text-[#01696f] font-medium transition-colors">Podgląd bloga ↗</a>
       <span id="admin-email" class="text-xs text-slate-400 font-medium hidden md:block"></span>
       <button onclick="doLogout()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold px-3 py-1.5 rounded-lg transition-colors">Wyloguj</button>
     </div>
@@ -250,7 +250,7 @@
 // ── Konfiguracja ────────────────────────────────────────────────────────────
 const SB_URL = 'https://kukvgsjrmrqtzhkszzum.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3Znc2pybXJxdHpoa3N6enVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTI0NzYsImV4cCI6MjA4ODQ4ODQ3Nn0.wOB-4CJTcRksSUY7WD7CXEccTKNxPIVF8AT8hczS5zY';
-const TABLE    = 'aura_articles';   // ta sama tabela, z której czyta blog.js
+const TABLE    = 'aura_articles';   // ta sama tabela, z której czyta scripts/build-blog.mjs
 const PLATFORM = 'Gwarancje.pro';   // artykuły tej strony: platforms @> [PLATFORM]
 const LEADS_TABLE = 'gwarancje_leads';
 const BUCKET   = 'article-images';  // istniejący publiczny bucket (upload: authenticated)
@@ -411,7 +411,7 @@ async function deleteLead(id) {
 
 // ── Lista postów ──────────────────────────────────────────────────────────────
 async function loadPosts() {
-  // Ta sama kolejność co na blogu (blog.js: created_at desc).
+  // Ta sama kolejność co na blogu (scripts/build-blog.mjs: created_at desc).
   const { data, error } = await sb
     .from(TABLE)
     .select('id, title, status, published_at, created_at')
@@ -488,7 +488,7 @@ async function openPost(id) {
     ? toLocalDatetimeStr(new Date(data.published_at)) : '';
   document.getElementById('save-label').textContent = 'Zaktualizuj';
   document.getElementById('btn-delete').classList.remove('hidden');
-  document.getElementById('btn-preview').href = `/blog.html#${id}`;
+  document.getElementById('btn-preview').href = `/blog#${id}`;
   document.getElementById('btn-preview').classList.remove('hidden');
   document.getElementById('save-status').textContent = '';
 
@@ -539,7 +539,7 @@ async function savePost() {
     excerpt: document.getElementById('f-excerpt').value.trim() || null,
     content,
     tags,
-    thumbnail_url: coverUrl,      // blog.js pokazuje okładkę z thumbnail_url
+    thumbnail_url: coverUrl,      // scripts/build-blog.mjs pokazuje okładkę z thumbnail_url
     status,
     published_at: publishedAt ? new Date(publishedAt).toISOString() : null,
     ai_generated: false,
@@ -560,7 +560,7 @@ async function savePost() {
   setStatus(status === 'published' ? '✓ Zapisano i opublikowano' : '✓ Zapisano jako szkic', 'green');
   document.getElementById('save-label').textContent = 'Zaktualizuj';
   document.getElementById('btn-delete').classList.remove('hidden');
-  document.getElementById('btn-preview').href = `/blog.html#${currentId}`;
+  document.getElementById('btn-preview').href = `/blog#${currentId}`;
   document.getElementById('btn-preview').classList.remove('hidden');
   loadPosts();
   setTimeout(() => setStatus('', ''), 3000);

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gwarancje ubezpieczeniowe dla firm | gwarancje.pro – Aura Consulting</title>
-<meta name="description" content="Broker gwarancji ubezpieczeniowych dla firm budowlanych i wykonawców. Wadium, należyte wykonanie, zwrot zaliczki. Badanie rynku i wdrożenie bezpłatne. 15 lat doświadczenia, 10+ towarzystw ubezpieczeń, gwarancja w 24h.">
+<title>Gwarancje ubezpieczeniowe dla firm | Gwarancje.PRO</title>
+<meta name="description" content="Broker gwarancji ubezpieczeniowych dla firm budowlanych: wadium, należyte wykonanie, zwrot zaliczki. Bezpłatna usługa brokerska, gwarancja nawet w 24 h.">
 <meta name="keywords" content="gwarancje ubezpieczeniowe, gwarancja wadialna, należyte wykonanie, broker gwarancji, wadium przetargowe, gwarancje budowlane, gwarancja ubezpieczeniowa dla firm, umowa limitu gwarancji, gwarancja zwrot zaliczki, gwarancja usunięcia wad, Warszawa, Polska">
 <meta name="author" content="Aura Consulting sp. z o.o.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -14,18 +14,17 @@
 <link rel="canonical" href="https://gwarancje.pro/">
 <link rel="alternate" hreflang="pl" href="https://gwarancje.pro/">
 <link rel="alternate" hreflang="x-default" href="https://gwarancje.pro/">
+<link rel="alternate" type="application/rss+xml" title="Blog Gwarancje.PRO" href="https://gwarancje.pro/blog/feed.xml">
 
 <!-- Geographic targeting -->
 <meta name="geo.region" content="PL-14">
 <meta name="geo.placename" content="Warszawa">
-<meta name="geo.position" content="52.2297;21.0122">
-<meta name="ICBM" content="52.2297, 21.0122">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://gwarancje.pro/">
-<meta property="og:title" content="Gwarancje ubezpieczeniowe dla firm | gwarancje.pro – Aura Consulting">
-<meta property="og:description" content="Broker gwarancji ubezpieczeniowych dla firm budowlanych i wykonawców. Wadium, należyte wykonanie, zwrot zaliczki. Bezpłatna usługa brokerska. Gwarancja w 24h.">
+<meta property="og:title" content="Gwarancje ubezpieczeniowe dla firm | Gwarancje.PRO">
+<meta property="og:description" content="Broker gwarancji ubezpieczeniowych dla firm budowlanych: wadium, należyte wykonanie, zwrot zaliczki. Bezpłatna usługa brokerska, gwarancja nawet w 24 h.">
 <meta property="og:image" content="https://gwarancje.pro/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -45,9 +44,6 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 
-<!-- Supabase (hero blog preview) -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-
 <!-- DNS prefetch & preconnect -->
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,13 +59,16 @@
       "@type": "Organization",
       "@id": "https://gwarancje.pro/#organization",
       "name": "Aura Consulting sp. z o.o.",
-      "alternateName": ["Gwarancje.PRO", "Aura Consulting"],
+      "alternateName": [
+        "Gwarancje.PRO",
+        "Aura Consulting"
+      ],
       "url": "https://gwarancje.pro",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://gwarancje.pro/og-image.png",
-        "width": 1200,
-        "height": 630
+        "url": "https://gwarancje.pro/logo.png",
+        "width": 800,
+        "height": 400
       },
       "telephone": "+48500502702",
       "email": "biuro@gwarancje.pro",
@@ -77,59 +76,123 @@
         "@type": "PostalAddress",
         "streetAddress": "ul. Bolkowska 2A/28",
         "addressLocality": "Warszawa",
-        "postalCode": "01-446",
+        "postalCode": "01-466",
         "addressCountry": "PL"
       },
       "description": "Broker gwarancji ubezpieczeniowych dla firm budowlanych i wykonawców w Polsce. Specjalizujemy się w gwarancjach wadialnych, należytego wykonania kontraktu (NWK), usunięcia wad i usterek (UWU) oraz zwrotu zaliczki (ZAL). Bezpłatna usługa brokerska.",
-      "foundingDate": "2010",
-      "numberOfEmployees": {"@type": "QuantitativeValue", "minValue": 5, "maxValue": 20},
       "legalName": "Aura Consulting spółka z ograniczoną odpowiedzialnością",
-      "taxID": "REGON 341302033",
+      "vatID": "PL9562300574",
       "identifier": [
-        {"@type": "PropertyValue", "name": "KRS", "value": "0000426835"},
-        {"@type": "PropertyValue", "name": "Licencja KNF", "value": "1972/13"},
-        {"@type": "PropertyValue", "name": "Rejestr brokerów KNF", "value": "00001851/U"}
+        {
+          "@type": "PropertyValue",
+          "name": "KRS",
+          "value": "0000426835"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "REGON",
+          "value": "341302033"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Licencja KNF",
+          "value": "1972/13"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Rejestr brokerów KNF",
+          "value": "00001851/U"
+        }
       ],
-      "areaServed": {"@type": "Country", "name": "Polska", "@id": "https://www.wikidata.org/wiki/Q36"},
-      "sameAs": ["https://www.auraconsulting.pl"]
+      "areaServed": {
+        "@type": "Country",
+        "name": "Polska",
+        "@id": "https://www.wikidata.org/wiki/Q36"
+      },
+      "sameAs": [
+        "https://www.auraconsulting.pl",
+        "https://rejestr.io/krs/426835/aura-consulting",
+        "https://aleo.com/int/company/aura-consulting-spolka-z-ograniczona-odpowiedzialnoscia",
+        "https://www.pkt.pl/firma/aura-consulting-sp-z-o-o-6063697"
+      ],
+      "knowsAbout": [
+        "Gwarancja wadialna",
+        "Gwarancja należytego wykonania kontraktu",
+        "Gwarancja usunięcia wad i usterek",
+        "Gwarancja zwrotu zaliczki",
+        "Umowa limitu gwarancyjnego",
+        "Zamówienia publiczne"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+48500502702",
+        "email": "biuro@gwarancje.pro",
+        "contactType": "customer service",
+        "availableLanguage": [
+          "pl"
+        ],
+        "areaServed": "PL"
+      }
     },
     {
-      "@type": ["LocalBusiness", "InsuranceAgency"],
+      "@type": [
+        "LocalBusiness",
+        "InsuranceAgency"
+      ],
       "@id": "https://gwarancje.pro/#localbusiness",
       "name": "Gwarancje.PRO – Broker Gwarancji Ubezpieczeniowych",
-      "parentOrganization": {"@id": "https://gwarancje.pro/#organization"},
+      "parentOrganization": {
+        "@id": "https://gwarancje.pro/#organization"
+      },
       "url": "https://gwarancje.pro",
       "telephone": "+48500502702",
       "email": "biuro@gwarancje.pro",
       "image": "https://gwarancje.pro/og-image.png",
-      "priceRange": "Bezpłatna usługa brokerska",
+      "description": "Broker gwarancji ubezpieczeniowych dla firm budowlanych i wykonawców: gwarancje wadialne, należytego wykonania kontraktu (NWK), usunięcia wad i usterek (UWU) oraz zwrotu zaliczki (ZAL). Bezpłatna usługa brokerska – wynagrodzenie brokera pochodzi z prowizji towarzystwa ubezpieczeń.",
+      "priceRange": "0 PLN",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "ul. Bolkowska 2A/28",
         "addressLocality": "Warszawa",
-        "postalCode": "01-446",
+        "postalCode": "01-466",
         "addressCountry": "PL"
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 52.2297,
-        "longitude": 21.0122
+      "areaServed": {
+        "@type": "Country",
+        "name": "Polska"
       },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-        "opens": "08:00",
-        "closes": "17:00"
-      },
-      "areaServed": {"@type": "Country", "name": "Polska"},
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Gwarancje ubezpieczeniowe",
         "itemListElement": [
-          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Gwarancja wadialna"}},
-          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Gwarancja należytego wykonania (NWK)"}},
-          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Gwarancja usunięcia wad i usterek (UWU)"}},
-          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Gwarancja zwrotu zaliczki (ZAL)"}}
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Gwarancja wadialna"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Gwarancja należytego wykonania (NWK)"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Gwarancja usunięcia wad i usterek (UWU)"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Gwarancja zwrotu zaliczki (ZAL)"
+            }
+          }
         ]
       }
     },
@@ -139,7 +202,9 @@
       "url": "https://gwarancje.pro",
       "name": "Gwarancje.PRO",
       "description": "Portal brokera gwarancji ubezpieczeniowych dla firm budowlanych w Polsce",
-      "publisher": {"@id": "https://gwarancje.pro/#organization"},
+      "publisher": {
+        "@id": "https://gwarancje.pro/#organization"
+      },
       "inLanguage": "pl-PL",
       "potentialAction": {
         "@type": "ContactAction",
@@ -151,17 +216,15 @@
       "@type": "WebPage",
       "@id": "https://gwarancje.pro/#webpage",
       "url": "https://gwarancje.pro/",
-      "name": "Gwarancje ubezpieczeniowe dla firm | gwarancje.pro – Aura Consulting",
-      "description": "Broker gwarancji ubezpieczeniowych dla firm budowlanych i wykonawców. Wadium, należyte wykonanie, zwrot zaliczki. 15 lat doświadczenia, 10+ towarzystw ubezpieczeń.",
-      "isPartOf": {"@id": "https://gwarancje.pro/#website"},
-      "about": {"@id": "https://gwarancje.pro/#organization"},
-      "inLanguage": "pl-PL",
-      "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {"@type": "ListItem", "position": 1, "name": "Strona główna", "item": "https://gwarancje.pro/"}
-        ]
-      }
+      "name": "Gwarancje ubezpieczeniowe dla firm | Gwarancje.PRO",
+      "description": "Broker gwarancji ubezpieczeniowych dla firm budowlanych: wadium, należyte wykonanie, zwrot zaliczki. Bezpłatna usługa brokerska, gwarancja nawet w 24 h.",
+      "isPartOf": {
+        "@id": "https://gwarancje.pro/#website"
+      },
+      "about": {
+        "@id": "https://gwarancje.pro/#organization"
+      },
+      "inLanguage": "pl-PL"
     },
     {
       "@type": "FAQPage",
@@ -177,7 +240,7 @@
         },
         {
           "@type": "Question",
-          "name": "Jak szybko można otrzymać gwarancję ubezpieczeniową?",
+          "name": "Jak szybko mogę otrzymać gwarancję ubezpieczeniową?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Przy aktywnej umowie limitu gwarancje wadialne do standardowej kwoty wystawiamy w ciągu 2–8 godzin. Gwarancje kontraktowe o większej wartości wymagają zazwyczaj 1–3 dni roboczych."
@@ -188,12 +251,12 @@
           "name": "Co to jest umowa limitu (UL) na gwarancje ubezpieczeniowe?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Umowa limitu (UL) to umowa ramowa z towarzystwem ubezpieczeń, która ustala maksymalną łączną sumę gwarancyjną dla Twojej firmy oraz warunki wystawiania kolejnych gwarancji bez indywidualnej analizy kredytowej. Znacznie przyspiesza cały proces i pozwala reagować na przetargi z dnia na dzień."
+            "text": "Umowa limitu (UL) to umowa ramowa z TU, która ustala maksymalną łączną sumę gwarancyjną dla Twojej firmy oraz warunki wystawiania kolejnych gwarancji bez indywidualnej analizy kredytowej. Znacznie przyspiesza cały proces i pozwala reagować na przetargi z dnia na dzień."
           }
         },
         {
           "@type": "Question",
-          "name": "Czy broker weryfikuje treść gwarancji pod kątem wymogów SIWZ?",
+          "name": "Czy pomagacie przy wymaganiach dotyczących treści gwarancji?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Tak — weryfikujemy, czy treść gwarancji spełnia wymogi SIWZ lub umowy deweloperskiej, i negocjujemy z TU zapisy niekorzystne dla klienta. To nasza standardowa usługa, bez dodatkowych opłat."
@@ -220,22 +283,10 @@
           "name": "Z iloma towarzystwami ubezpieczeń współpracujecie?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Współpracujemy z ponad 10 towarzystwami ubezpieczeń oferującymi gwarancje ubezpieczeniowe w Polsce, m.in. PZU, Warta, Uniqa, Allianz, TUiR Euler Hermes i innymi. Dzięki temu możemy wybrać najkorzystniejszą ofertę dla każdego klienta."
+            "text": "Współpracujemy z ponad 10 towarzystwami ubezpieczeń oferującymi gwarancje w Polsce, m.in. PZU, Warta, Uniqa, Allianz i innymi. Dzięki temu możemy wybrać najkorzystniejszą ofertę dla każdego klienta, uwzględniając zarówno cenę, jak i wymagania dotyczące treści dokumentu gwarancji."
           }
         }
       ]
-    },
-    {
-      "@type": "VideoObject",
-      "@id": "https://gwarancje.pro/#wideo",
-      "name": "Gwarancje ubezpieczeniowe dla firm – jak działamy | Aura Consulting",
-      "description": "Wyjaśniamy czym jest broker gwarancji ubezpieczeniowych, jakie produkty oferujemy (wadium, NWK, UWU, ZAL) i dlaczego warto z nami współpracować. Bezpłatna usługa brokerska, 15 lat doświadczenia.",
-      "thumbnailUrl": "https://img.youtube.com/vi/S01sqBAOTlw/maxresdefault.jpg",
-      "embedUrl": "https://www.youtube.com/embed/S01sqBAOTlw",
-      "contentUrl": "https://www.youtube.com/watch?v=S01sqBAOTlw",
-      "uploadDate": "2026-05-12",
-      "inLanguage": "pl-PL",
-      "publisher": {"@id": "https://gwarancje.pro/#organization"}
     },
     {
       "@type": "Service",
@@ -244,9 +295,18 @@
       "alternateName": "WADIUM ubezpieczeniowe",
       "description": "Gwarancja wadialna zastępuje gotówkowe wadium przetargowe. Pozwala zachować płynność finansową firmy na czas postępowania o zamówienie publiczne i prywatne. Wystawiana w ciągu 2–8 godzin przy aktywnej umowie limitu.",
       "serviceType": "Gwarancja ubezpieczeniowa",
-      "provider": {"@id": "https://gwarancje.pro/#organization"},
-      "areaServed": {"@type": "Country", "name": "Polska"},
-      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "PLN", "description": "Bezpłatna usługa brokerska — wynagrodzenie z prowizji TU"}
+      "provider": {
+        "@id": "https://gwarancje.pro/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Polska"
+      },
+      "category": "Gwarancje ubezpieczeniowe",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Firmy budowlane i wykonawcy"
+      }
     },
     {
       "@type": "Service",
@@ -255,8 +315,18 @@
       "alternateName": "NWK",
       "description": "Gwarancja terminowego i zgodnego z umową wykonania robót budowlanych. Standardowy wymóg zamawiającego przy podpisaniu kontraktu budowlanego.",
       "serviceType": "Gwarancja ubezpieczeniowa",
-      "provider": {"@id": "https://gwarancje.pro/#organization"},
-      "areaServed": {"@type": "Country", "name": "Polska"}
+      "provider": {
+        "@id": "https://gwarancje.pro/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Polska"
+      },
+      "category": "Gwarancje ubezpieczeniowe",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Firmy budowlane i wykonawcy"
+      }
     },
     {
       "@type": "Service",
@@ -265,8 +335,18 @@
       "alternateName": "UWU",
       "description": "Zabezpieczenie okresu rękojmi i gwarancji jakości po odbiorze robót budowlanych. Zwalnia zatrzymane kaucje i poprawia przepływy finansowe firmy.",
       "serviceType": "Gwarancja ubezpieczeniowa",
-      "provider": {"@id": "https://gwarancje.pro/#organization"},
-      "areaServed": {"@type": "Country", "name": "Polska"}
+      "provider": {
+        "@id": "https://gwarancje.pro/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Polska"
+      },
+      "category": "Gwarancje ubezpieczeniowe",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Firmy budowlane i wykonawcy"
+      }
     },
     {
       "@type": "Service",
@@ -275,8 +355,18 @@
       "alternateName": "ZAL",
       "description": "Chroni zamawiającego przed utratą przedpłaty w razie niewykonania umowy. Niezbędna przy kontraktach z zaliczkowym finansowaniem robót budowlanych.",
       "serviceType": "Gwarancja ubezpieczeniowa",
-      "provider": {"@id": "https://gwarancje.pro/#organization"},
-      "areaServed": {"@type": "Country", "name": "Polska"}
+      "provider": {
+        "@id": "https://gwarancje.pro/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Polska"
+      },
+      "category": "Gwarancje ubezpieczeniowe",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Firmy budowlane i wykonawcy"
+      }
     }
   ]
 }
@@ -490,11 +580,11 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
 <body>
 
 <!-- TOPBAR -->
-<header class="topbar" role="banner" itemscope itemtype="https://schema.org/WPHeader">
+<header class="topbar" role="banner">
   <a href="/" class="logo" aria-label="Gwarancje.PRO – strona główna">Gwarancje<span>.PRO</span></a>
   <nav class="nav" aria-label="Nawigacja główna" role="navigation">
     <a href="#produkty">Produkty</a>
-    <a href="/blog.html">Blog</a>
+    <a href="/blog">Blog</a>
     <a href="#dlaczego-my">Dlaczego my</a>
     <a href="#proces">Jak działamy</a>
     <a href="#faq">FAQ</a>
@@ -547,9 +637,12 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
     <div class="hero-visual">
       <div class="hero-card-title">📰 Aktualności</div>
       <div id="hero-blog-posts">
-        <div class="hero-blog-empty">Ładowanie artykułów…</div>
+        <!-- GEN:HERO-BLOG:START -->
+        <a href="/blog/czym-jest-plynnosc-finansowa-w-firmie" class="hero-blog-post"><img src="https://kukvgsjrmrqtzhkszzum.supabase.co/storage/v1/object/public/article-images/normalized/czym-jest-plynnosc-finansowa-w-firmie-content1-800.webp" alt="" class="hero-blog-thumb" loading="lazy"><div class="hero-blog-info"><div class="hero-blog-title">Czym jest płynność finansowa w firmie?</div><div class="hero-blog-date">14 maja 2026</div></div></a>
+        <a href="/blog/przewodnik-po-gwarancjach-ubezpieczeniowych" class="hero-blog-post"><img src="https://kukvgsjrmrqtzhkszzum.supabase.co/storage/v1/object/public/article-images/normalized/przewodnik-po-gwarancjach-ubezpieczeniowych-content1-800.webp" alt="" class="hero-blog-thumb" loading="lazy"><div class="hero-blog-info"><div class="hero-blog-title">Przewodnik po gwarancjach ubezpieczeniowych</div><div class="hero-blog-date">12 maja 2026</div></div></a>
+        <!-- GEN:HERO-BLOG:END -->
       </div>
-      <a href="/blog.html" class="hero-blog-more">Zobacz wszystkie artykuły →</a>
+      <a href="/blog" class="hero-blog-more">Zobacz wszystkie artykuły →</a>
     </div>
   </div>
 
@@ -709,34 +802,34 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
   <div class="container">
     <div class="section-label">FAQ</div>
     <h2 class="section-title" id="faq-heading">Najczęstsze pytania o gwarancje ubezpieczeniowe</h2>
-    <div class="faq-grid" itemscope itemtype="https://schema.org/FAQPage">
-      <div class="faq-item" onclick="toggleFaq(this)" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-        <div class="faq-q" itemprop="name">Ile kosztuje usługa brokera gwarancji ubezpieczeniowych?<div class="faq-icon" aria-hidden="true">+</div></div>
-        <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Usługa brokerska jest bezpłatna dla klienta. Wynagrodzenie brokera pochodzi z prowizji towarzystwa ubezpieczeń, które wliczone jest w stawkę składki — taką samą, jaką zapłaciłbyś idąc bezpośrednio do TU, często nawet niższą dzięki sile negocjacyjnej brokera.</span></div>
+    <div class="faq-grid">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Ile kosztuje usługa brokera gwarancji ubezpieczeniowych?<div class="faq-icon" aria-hidden="true">+</div></div>
+        <div class="faq-a"><span>Usługa brokerska jest bezpłatna dla klienta. Wynagrodzenie brokera pochodzi z prowizji towarzystwa ubezpieczeń, które wliczone jest w stawkę składki — taką samą, jaką zapłaciłbyś idąc bezpośrednio do TU, często nawet niższą dzięki sile negocjacyjnej brokera.</span></div>
       </div>
-      <div class="faq-item" onclick="toggleFaq(this)" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-        <div class="faq-q" itemprop="name">Jak szybko mogę otrzymać gwarancję ubezpieczeniową?<div class="faq-icon" aria-hidden="true">+</div></div>
-        <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Przy aktywnej umowie limitu gwarancje wadialne do standardowej kwoty wystawiamy w ciągu 2–8 godzin. Gwarancje kontraktowe o większej wartości wymagają zazwyczaj 1–3 dni roboczych.</span></div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Jak szybko mogę otrzymać gwarancję ubezpieczeniową?<div class="faq-icon" aria-hidden="true">+</div></div>
+        <div class="faq-a"><span>Przy aktywnej umowie limitu gwarancje wadialne do standardowej kwoty wystawiamy w ciągu 2–8 godzin. Gwarancje kontraktowe o większej wartości wymagają zazwyczaj 1–3 dni roboczych.</span></div>
       </div>
-      <div class="faq-item" onclick="toggleFaq(this)" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-        <div class="faq-q" itemprop="name">Co to jest umowa limitu (UL) na gwarancje ubezpieczeniowe?<div class="faq-icon" aria-hidden="true">+</div></div>
-        <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Umowa limitu (UL) to umowa ramowa z TU, która ustala maksymalną łączną sumę gwarancyjną dla Twojej firmy oraz warunki wystawiania kolejnych gwarancji bez indywidualnej analizy kredytowej. Znacznie przyspiesza cały proces i pozwala reagować na przetargi z dnia na dzień.</span></div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Co to jest umowa limitu (UL) na gwarancje ubezpieczeniowe?<div class="faq-icon" aria-hidden="true">+</div></div>
+        <div class="faq-a"><span>Umowa limitu (UL) to umowa ramowa z TU, która ustala maksymalną łączną sumę gwarancyjną dla Twojej firmy oraz warunki wystawiania kolejnych gwarancji bez indywidualnej analizy kredytowej. Znacznie przyspiesza cały proces i pozwala reagować na przetargi z dnia na dzień.</span></div>
       </div>
-      <div class="faq-item" onclick="toggleFaq(this)" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-        <div class="faq-q" itemprop="name">Czy pomagacie przy wymaganiach dotyczących treści gwarancji?<div class="faq-icon" aria-hidden="true">+</div></div>
-        <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Tak — weryfikujemy, czy treść gwarancji spełnia wymogi SIWZ lub umowy deweloperskiej, i negocjujemy z TU zapisy niekorzystne dla klienta. To nasza standardowa usługa, bez dodatkowych opłat.</span></div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Czy pomagacie przy wymaganiach dotyczących treści gwarancji?<div class="faq-icon" aria-hidden="true">+</div></div>
+        <div class="faq-a"><span>Tak — weryfikujemy, czy treść gwarancji spełnia wymogi SIWZ lub umowy deweloperskiej, i negocjujemy z TU zapisy niekorzystne dla klienta. To nasza standardowa usługa, bez dodatkowych opłat.</span></div>
       </div>
-      <div class="faq-item" onclick="toggleFaq(this)" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-        <div class="faq-q" itemprop="name">Czy audyt posiadanego portfela gwarancji jest płatny?<div class="faq-icon" aria-hidden="true">+</div></div>
-        <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Absolutnie nie. Przegląd aktualnych warunków umów limitowych, analiza stawek i wskazanie możliwych optymalizacji są całkowicie bezpłatne i niezobowiązujące.</span></div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Czy audyt posiadanego portfela gwarancji jest płatny?<div class="faq-icon" aria-hidden="true">+</div></div>
+        <div class="faq-a"><span>Absolutnie nie. Przegląd aktualnych warunków umów limitowych, analiza stawek i wskazanie możliwych optymalizacji są całkowicie bezpłatne i niezobowiązujące.</span></div>
       </div>
-      <div class="faq-item" onclick="toggleFaq(this)" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-        <div class="faq-q" itemprop="name">Czym różni się gwarancja wadialna od gotówkowego wadium?<div class="faq-icon" aria-hidden="true">+</div></div>
-        <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Gwarancja wadialna zastępuje gotówkowe wadium przetargowe — zamiast zamrażać środki na rachunku, firma dostarcza zamawiającemu dokument gwarancji. Koszt gwarancji wadialnej to zazwyczaj 0,2–0,5% sumy gwarancyjnej rocznie, co jest znacznie tańsze niż koszt utraconych odsetek od zamrożonego kapitału.</span></div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Czym różni się gwarancja wadialna od gotówkowego wadium?<div class="faq-icon" aria-hidden="true">+</div></div>
+        <div class="faq-a"><span>Gwarancja wadialna zastępuje gotówkowe wadium przetargowe — zamiast zamrażać środki na rachunku, firma dostarcza zamawiającemu dokument gwarancji. Koszt gwarancji wadialnej to zazwyczaj 0,2–0,5% sumy gwarancyjnej rocznie, co jest znacznie tańsze niż koszt utraconych odsetek od zamrożonego kapitału.</span></div>
       </div>
-      <div class="faq-item" onclick="toggleFaq(this)" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-        <div class="faq-q" itemprop="name">Z iloma towarzystwami ubezpieczeń współpracujecie?<div class="faq-icon" aria-hidden="true">+</div></div>
-        <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Współpracujemy z ponad 10 towarzystwami ubezpieczeń oferującymi gwarancje w Polsce, m.in. PZU, Warta, Uniqa, Allianz i innymi. Dzięki temu możemy wybrać najkorzystniejszą ofertę dla każdego klienta, uwzględniając zarówno cenę, jak i wymagania dotyczące treści dokumentu gwarancji.</span></div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Z iloma towarzystwami ubezpieczeń współpracujecie?<div class="faq-icon" aria-hidden="true">+</div></div>
+        <div class="faq-a"><span>Współpracujemy z ponad 10 towarzystwami ubezpieczeń oferującymi gwarancje w Polsce, m.in. PZU, Warta, Uniqa, Allianz i innymi. Dzięki temu możemy wybrać najkorzystniejszą ofertę dla każdego klienta, uwzględniając zarówno cenę, jak i wymagania dotyczące treści dokumentu gwarancji.</span></div>
       </div>
     </div>
   </div>
@@ -768,7 +861,7 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
           <div class="contact-icon">🏢</div>
           <div>
             <div class="contact-label">Adres</div>
-            <div class="contact-value" style="font-size:.9375rem">ul. Bolkowska 2A/28<br>01-446 Warszawa</div>
+            <div class="contact-value" style="font-size:.9375rem">ul. Bolkowska 2A/28<br>01-466 Warszawa</div>
           </div>
         </div>
         <div class="contact-item">
@@ -824,7 +917,7 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
           </div>
           <label class="form-consent">
             <input type="checkbox" name="rodo_zgoda" required>
-            <span>Wyrażam zgodę na przetwarzanie moich danych przez Aura Consulting sp. z o.o. w celu odpowiedzi na zapytanie. <a href="/polityka-prywatnosci.html" target="_blank" rel="noopener">Polityka prywatności</a> *</span>
+            <span>Wyrażam zgodę na przetwarzanie moich danych przez Aura Consulting sp. z o.o. w celu odpowiedzi na zapytanie. <a href="/polityka-prywatnosci" target="_blank" rel="noopener">Polityka prywatności</a> *</span>
           </label>
           <button type="submit" class="btn-submit" id="btn-submit">Wyślij zapytanie →</button>
           <div class="form-error" id="form-error" role="alert"></div>
@@ -864,20 +957,19 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
 </main><!-- /#main-content -->
 
 <!-- FOOTER -->
-<footer itemscope itemtype="https://schema.org/WPFooter">
-  <div class="footer-inner" itemscope itemtype="https://schema.org/Organization">
-    <meta itemprop="name" content="Aura Consulting sp. z o.o.">
-    <meta itemprop="url" content="https://gwarancje.pro">
+<footer>
+  <div class="footer-inner">
+    <meta content="Aura Consulting sp. z o.o.">
     <div class="footer-links">
-      <a href="/polityka-prywatnosci.html">Polityka prywatności</a>
-      <a href="/rodo.html">Nota RODO</a>
-      <a href="/regulamin.html">Regulamin</a>
-      <a href="mailto:biuro@gwarancje.pro" itemprop="email">biuro@gwarancje.pro</a>
-      <a href="tel:+48500502702" itemprop="telephone">500 502 702</a>
+      <a href="/polityka-prywatnosci">Polityka prywatności</a>
+      <a href="/rodo">Nota RODO</a>
+      <a href="/regulamin">Regulamin</a>
+      <a href="mailto:biuro@gwarancje.pro">biuro@gwarancje.pro</a>
+      <a href="tel:+48500502702">500 502 702</a>
     </div>
     <hr class="footer-divider">
     <p>© 2026 Aura Consulting. Wszelkie prawa zastrzeżone.</p>
-    <p itemprop="description">Aura Consulting spółka z ograniczoną odpowiedzialnością z siedzibą w Warszawie, ul. Bolkowska 2A lok. 28, wpisana do KRS pod nr 0000426835 przez Sąd Rejonowy dla m.st. Warszawy, XII Wydział Gospodarczy. REGON 341302033, kapitał zakładowy 34 000 zł. Zezwolenie KNF nr 1972/13, wpis w rejestrze brokerów nr 00001851/U.</p>
+    <p>Aura Consulting spółka z ograniczoną odpowiedzialnością z siedzibą w Warszawie, ul. Bolkowska 2A lok. 28, wpisana do KRS pod nr 0000426835 przez Sąd Rejonowy dla m.st. Warszawy, XII Wydział Gospodarczy. NIP 9562300574, REGON 341302033, kapitał zakładowy 34 000 zł. Zezwolenie KNF nr 1972/13, wpis w rejestrze brokerów nr 00001851/U.</p>
   </div>
 </footer>
 
@@ -955,47 +1047,5 @@ window.addEventListener('scroll', () => {
 });
 </script>
 
-<script>
-// ── Hero: losowe artykuły z bloga ─────────────────────────────────────────
-(async () => {
-  const el = document.getElementById('hero-blog-posts');
-  if (!el || typeof window.supabase === 'undefined') return;
-  try {
-    const sb = window.supabase.createClient(
-      'https://kukvgsjrmrqtzhkszzum.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3Znc2pybXJxdHpoa3N6enVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTI0NzYsImV4cCI6MjA4ODQ4ODQ3Nn0.wOB-4CJTcRksSUY7WD7CXEccTKNxPIVF8AT8hczS5zY'
-    );
-    const { data, error } = await sb
-      .from('aura_articles')
-      .select('id, title, published_at, created_at, thumbnail_url')
-      .eq('status', 'published')
-      .contains('platforms', ['Gwarancje.pro'])
-      .order('created_at', { ascending: false })
-      .limit(3);
-
-    if (error) {
-      console.error('[Hero Blog] Supabase error:', error.message, '| code:', error.code);
-      el.innerHTML = '';
-      return;
-    }
-    if (!data?.length) {
-      el.innerHTML = '<p class="hero-blog-empty">Wkrótce pierwsze artykuły.</p>';
-      return;
-    }
-    el.innerHTML = data.map(p => {
-      const ts    = p.published_at || p.created_at;
-      const date  = ts ? new Date(ts).toLocaleDateString('pl-PL', {day:'numeric', month:'short', year:'numeric'}) : '';
-      const title = (p.title || '').replace(/&/g,'&amp;').replace(/</g,'&lt;');
-      const thumb = p.thumbnail_url
-        ? `<img src="${p.thumbnail_url}" alt="" class="hero-blog-thumb" loading="lazy">`
-        : `<div class="hero-blog-thumb-ph">📄</div>`;
-      return `<a href="/blog.html#${p.id}" class="hero-blog-post">${thumb}<div class="hero-blog-info"><div class="hero-blog-title">${title}</div><div class="hero-blog-date">${date}</div></div></a>`;
-    }).join('');
-  } catch(e) {
-    console.error('[Hero Blog] Unexpected error:', e);
-    el.innerHTML = '';
-  }
-})();
-</script>
 </body>
 </html>

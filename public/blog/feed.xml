@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog Gwarancje.PRO</title>
+    <link>https://gwarancje.pro/blog</link>
+    <description>Poradniki i aktualności o gwarancjach ubezpieczeniowych dla firm budowlanych i wykonawców: wadium, należyte wykonanie kontraktu (NWK), usunięcie wad i usterek (UWU), zwrot zaliczki, umowy limitu.</description>
+    <language>pl</language>
+    <lastBuildDate>Thu, 14 May 2026 08:54:23 GMT</lastBuildDate>
+    <atom:link href="https://gwarancje.pro/blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Czym jest płynność finansowa w firmie?</title>
+      <link>https://gwarancje.pro/blog/czym-jest-plynnosc-finansowa-w-firmie</link>
+      <guid isPermaLink="true">https://gwarancje.pro/blog/czym-jest-plynnosc-finansowa-w-firmie</guid>
+      <pubDate>Thu, 14 May 2026 08:54:23 GMT</pubDate>
+      <description><![CDATA[Płynność finansowa to mówiąc ogólnie zdolność firmy do terminowego regulowania bieżących zobowiązań. Oznacza to, że przedsiębiorstwo ma środki na opłacenie faktur, wynagrodzeń, podatków, rat i innych kosztów wtedy, gdy rzeczywiście trzeba je zapłacić.]]></description>
+      <category>płynność finansowa</category>
+      <category>gwarancje ubezpieczeniowe</category>
+    </item>
+    <item>
+      <title>Przewodnik po gwarancjach ubezpieczeniowych</title>
+      <link>https://gwarancje.pro/blog/przewodnik-po-gwarancjach-ubezpieczeniowych</link>
+      <guid isPermaLink="true">https://gwarancje.pro/blog/przewodnik-po-gwarancjach-ubezpieczeniowych</guid>
+      <pubDate>Tue, 12 May 2026 12:21:03 GMT</pubDate>
+      <description><![CDATA[Gwarancje ubezpieczeniowe to praktyczne narzędzie dla firm, które chcą zabezpieczyć swoje zobowiązania wobec kontrahenta, inwestora albo zamawiającego. Zamiast blokować własne pieniądze, przedsiębiorca przedstawia dokument wystawiony przez ubezpieczyciela, który potwierdza gotowość zapłaty w określonych sytuacjach. Dzięki temu firma może brać udział w przetargach, podpisywać kontrakty i jednocześnie zachować większą swobodę finansową.]]></description>
+      <category>gwarancje ubezpieczeniowe</category>
+      <category>gwarancja ubezpieczeniowa</category>
+      <category>gwarancja wadialna</category>
+      <category>gwarancja należytego wykonania</category>
+    </item>
+  </channel>
+</rss>

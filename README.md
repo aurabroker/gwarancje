@@ -32,8 +32,9 @@ a każdy artykuł ma własny adres, tytuł, opis, canonical, Open Graph i JSON-L
    - listę artykułów i JSON-LD w `public/blog.html` (bloki między `<!-- GEN:BLOG-LIST:START/END -->`
      i `<!-- GEN:BLOG-SCHEMA:START/END -->`),
    - trzy najnowsze wpisy w karcie „Aktualności” w `public/index.html` (blok `<!-- GEN:HERO-BLOG:START/END -->`, jeśli znaczniki istnieją).
-4. Jeśli coś się zmieniło, Action robi commit `chore(blog): regenerate static articles` i push do `main`,
-   co uruchamia deploy strony.
+4. Jeśli coś się zmieniło, Action robi commit `chore(blog): regenerate static articles` i push do `main`.
+   Deploy wykonuje Cloudflare Workers Builds (integracja z Git), który reaguje na każdy push do `main`,
+   także ten zrobiony tokenem Actions.
 
 Artykuł wycofany z publikacji (szkic lub usunięty z platformy `Gwarancje.pro`) znika przy kolejnym
 uruchomieniu — skrypt usuwa tylko pliki, które sam wygenerował (oznaczone komentarzem
@@ -51,7 +52,7 @@ z hashtagów są pomijane na stronie, a pierwszy obraz bez `alt` dostaje tytuł 
 
 ### Uruchomienie lokalne
 
-Wymagany Node 22, bez instalowania zależności:
+Wymagany Node 18 lub nowszy (Action używa 22), bez instalowania zależności:
 
 ```bash
 node scripts/build-blog.mjs

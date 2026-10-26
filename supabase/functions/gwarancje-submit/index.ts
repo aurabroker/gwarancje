@@ -262,7 +262,7 @@ Deno.serve(async (req: Request) => {
   <tr><td style="background:#f0f4f4;padding:20px 40px;border-top:1px solid #e0e8e8;">
     <p style="margin:0;font-size:12px;color:#888;line-height:1.7;">
       <strong style="color:#555;">Aura Consulting sp. z o.o.</strong><br>
-      ul. Bolkowska 2A/28, 01-446 Warszawa · Zezwolenie KNF nr 1972/13<br>
+      ul. Bolkowska 2A/28, 01-466 Warszawa · Zezwolenie KNF nr 1972/13<br>
       <a href="https://gwarancje.pro" style="color:#01696f;text-decoration:none;">gwarancje.pro</a>
     </p>
   </td></tr>

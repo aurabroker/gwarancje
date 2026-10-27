@@ -70,6 +70,12 @@ Jeśli Supabase nie odpowiada, skrypt kończy się błędem i nie rusza istniej�
 
 ### Assety graficzne
 
-`scripts/build-assets.mjs` (Playwright + Chromium) renderuje `public/logo.png`, `public/og-image.png`,
-ikony (`favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`). `favicon.svg`
-i `site.webmanifest` są ręczne. Uruchamiaj tylko przy zmianie znaku graficznego.
+Znak graficzny: ten sam romb low-poly co w grupowe.pro, napis „gwarancje.pro" w tym samym stylu.
+Pliki źródłowe (wygenerowane w Artlist, JPEG 1280 px) leżą w `public/brand/src/`:
+`icon.jpg` (ikona 1:1), `lockup-white.jpg` (logotyp na białym tle), `lockup-navy.jpg` (na granacie).
+
+`scripts/build-assets.mjs` (Playwright + Chromium) wyprowadza z nich wszystko, co używa strona:
+`public/brand/icon.png`, `logo-gwarancje.png` / `logo-gwarancje-dark.png` (pełna rozdzielczość),
+`logo-nav.png` / `logo-nav-dark.png` (2× do nagłówka i stopki), `public/logo.png` (Organization.logo),
+`public/og-image.png`, ikony (`favicon.ico`, `favicon.svg`, `apple-touch-icon.png`, `icon-192.png`,
+`icon-512.png`). `site.webmanifest` jest ręczny. Uruchamiaj tylko po podmianie plików w `public/brand/src/`.

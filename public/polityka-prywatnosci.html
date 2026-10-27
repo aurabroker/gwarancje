@@ -26,7 +26,7 @@
 a{color:var(--c-primary)}
 .nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--c-line)}
 .nav-inner{max-width:72rem;margin:0 auto;padding:0 1.25rem;height:4rem;display:flex;align-items:center;justify-content:space-between}
-.brand{font-weight:800;font-size:1.25rem;letter-spacing:-.02em;color:var(--c-primary);text-decoration:none}.brand span{color:#94a3b8;font-weight:400}
+.brand{display:flex;align-items:center;text-decoration:none}.brand img{display:block;height:36px;width:auto}
 .nav-links a{margin-left:1.25rem;font-size:.9rem;font-weight:600;color:#475569;text-decoration:none}.nav-links a:hover{color:var(--c-primary)}
 main{max-width:48rem;margin:0 auto;padding:2.5rem 1.25rem 4rem}
 h1{font-size:2rem;font-weight:800;letter-spacing:-.02em;margin:0 0 .5rem}
@@ -44,7 +44,7 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.55);padding:2.5rem 1.25r
 <body>
 <nav class="nav" aria-label="Nawigacja">
   <div class="nav-inner">
-    <a href="/" class="brand" aria-label="Gwarancje.PRO – strona główna">Gwarancje<span>.PRO</span></a>
+    <a href="/" class="brand" aria-label="Gwarancje.PRO – strona główna"><img src="/brand/logo-nav.png" alt="Gwarancje.PRO" width="161" height="36" decoding="async"></a>
     <div class="nav-links"><a href="/#produkty">Produkty</a><a href="/blog">Blog</a><a href="/#faq">FAQ</a><a href="/#kontakt">Kontakt</a></div>
   </div>
 </nav>

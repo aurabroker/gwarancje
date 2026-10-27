@@ -391,8 +391,8 @@ button{cursor:pointer;font:inherit;border:none;background:none}
 
 /* ── TOPBAR ── */
 .topbar{position:sticky;top:0;z-index:100;background:rgba(247,246,242,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--c-border);padding:0 clamp(1rem,5vw,3rem);height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.logo{font-size:1.25rem;font-weight:700;color:var(--c-primary);letter-spacing:-.02em}
-.logo span{color:var(--c-muted);font-weight:400}
+.logo{display:flex;align-items:center;flex-shrink:0}
+.logo img{display:block;height:40px;width:auto}
 .nav{display:flex;align-items:center;gap:1.5rem}
 .nav a{font-size:.875rem;font-weight:500;color:var(--c-muted);transition:color var(--transition)}
 .nav a:hover{color:var(--c-primary)}
@@ -561,6 +561,7 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
 .footer-links a{color:rgba(255,255,255,.4);transition:color var(--transition)}
 .footer-links a:hover{color:#fff}
 .footer-divider{border:none;border-top:1px solid rgba(255,255,255,.08);margin:.5rem 0}
+.footer-logo{display:block;height:44px;width:auto;margin-bottom:.25rem}
 
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
@@ -581,7 +582,7 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
 
 <!-- TOPBAR -->
 <header class="topbar" role="banner">
-  <a href="/" class="logo" aria-label="Gwarancje.PRO – strona główna">Gwarancje<span>.PRO</span></a>
+  <a href="/" class="logo" aria-label="Gwarancje.PRO – strona główna"><img src="/brand/logo-nav.png" alt="Gwarancje.PRO" width="179" height="40" decoding="async"></a>
   <nav class="nav" aria-label="Nawigacja główna" role="navigation">
     <a href="#produkty">Produkty</a>
     <a href="/blog">Blog</a>
@@ -960,6 +961,7 @@ footer{background:var(--c-dark);color:rgba(255,255,255,.4);padding:2.5rem clamp(
 <footer>
   <div class="footer-inner">
     <meta content="Aura Consulting sp. z o.o.">
+    <a href="/" aria-label="Gwarancje.PRO – strona główna"><img class="footer-logo" src="/brand/logo-nav-dark.png" alt="Gwarancje.PRO" width="213" height="44" loading="lazy" decoding="async"></a>
     <div class="footer-links">
       <a href="/polityka-prywatnosci">Polityka prywatności</a>
       <a href="/rodo">Nota RODO</a>
